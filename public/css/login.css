@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+*{
+    box-sizing : border-box;
+}
+
+body {
+    background-color: blanchedalmond;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+  background-color: white;
+  padding: 50px;
+  box-shadow: 0 14px 28px rgba(252, 76, 76, 0.25) ,
+  0 10px 10px rgba(252, 76, 76, 0.25), 0 14px 28px rgba(252, 76, 76, 0.25) ;
+  border-radius: 20px;
+}
+.sign-up-container,.sign-in-container {
+    background-color: blanchedalmond;
+    box-shadow: 5px 5px 5px brown;
+    padding: 20px;
+    border-radius: 20px;
+    color: brown;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    font-size: larger;
+}
+input{
+    box-sizing: border-box;
+    border: 2px solid brown;
+    height: 6vh;
+    width: 50vw;
+    border-radius: 10px;
+    color: brown;
+    font-size: large;
+    padding: 5px;
+    margin: 10px ;  
+    transition: 0.9s ease;  
+}
+input:focus{
+    transform: scale(1.05);
+    font-weight: bold;
+}
+button{
+    background-color: brown;
+    color: whitesmoke;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: brown;
+    font-size: 20px;
+    transition: 0.8s ease;
+}
+button:hover{
+    transform: scale(1.1);
+}
+button:focus{
+   transform: scale(0.9);
+}
+h1{
+    color: brown;
+}
+p{
+    color: brown;
+}
+
+
+
+  
+
+
