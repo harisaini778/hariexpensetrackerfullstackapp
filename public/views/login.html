@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <title>Login and Signup Page</title>
 </head>
 <body>
@@ -24,25 +24,25 @@
             <button type="submit">Login</button>
         </form>
 
-        <form id="signup-form" style="display: none;">
+        <form id="signup-form" style="display: none;" action="/user/signup" method="POST">
           <div class="greetings">
           <h3>Welcome New User!</h2>
           <p>Create an account to start managing your expenses</p>
         </div>
             <h1>Create Account</h2>
             
-            <input type="text" id="signup-username" placeholder="Name" required>
+            <input type="text" id="signup-username" placeholder="Name" name="name">
        
-            <input type="email" placeholder="Email" id="login-email"/>
+            <input type="email" placeholder="Email"  id="signup-email" name="email"/>
           
-            <input type="password" id="signup-password" placeholder="Password" required>
+            <input type="password" id="signup-password" placeholder="Password" name="password" required>
             <button type="button" onclick="toggleForm()">Switch to Login</button>
-            <button type="submit">Sign Up</button>
+            <button>Sign Up</button>
         </form>
     </div>
   </div>
 </div>
 
-<script src="/public/js/login.js"></script>
+<script src="../js/login.js"></script>
 </body>
 </html>

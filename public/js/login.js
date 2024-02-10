@@ -11,10 +11,3 @@ function toggleForm() {
     }
 }
 
-document.getElementById("login-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-});
-
-document.getElementById("signup-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-});
