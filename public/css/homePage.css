@@ -1,0 +1,59 @@
+
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.navbar {
+    background-color: brown !important;
+    padding: 15px;
+}
+
+.brandimg {
+    margin: 10px;
+}
+
+.navbar-brand {
+    margin-right: 20px;
+}
+
+.navbar-toggler {
+    margin-right: 20px;
+}
+
+
+.navbar-nav {
+    margin-right: auto; 
+}
+
+.nav-item {
+    margin-right: 10px;
+}
+
+.nav-link {
+    color: white;
+}
+
+
+.premiumIcon {
+    margin-right: 10px;
+    color: white;
+}
+
+
+.btn-light {
+    margin-right: 10px;
+}
+
+.tooltip-inner {
+    background-color: brown;
+    color: white;
+}
+#premiumimg{
+    color: white !important;
+}
