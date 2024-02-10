@@ -9,17 +9,17 @@
 <body>
 
 <div class="container">
-  <div><h1>Beawre of little expenses. A small leak will sink a great ship.</h1></div>
+  <div><h1>Beaware of little expenses. A small leak will sink a great ship.</h1></div>
   <div class="inner-container">
     <div class="form-container">
-        <form id="login-form">
+        <form id="login-form" action="/user/login" method="post">
           <div class="greetings">
             <h3>Welcome Existing User!</h2>
             <p>Login to see and manage your expenses</p>
           </div>
             <h1>Login</h2>
-            <input type="text" id="login-username" placeholder="Name" required>
-            <input type="password" id="login-password" placeholder="Password" required>
+            <input type="text" id="login-username" placeholder="Email"  name="loginEmail" required>
+            <input type="password" id="login-password" placeholder="Password"  name="loginPassword" required>
             <button type="button" onclick="toggleForm()">Switch to Sign Up</button>
             <button type="submit">Login</button>
         </form>

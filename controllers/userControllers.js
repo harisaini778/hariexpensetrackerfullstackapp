@@ -29,3 +29,27 @@ exports.postUserSignUp = (req, res, next) => {
         })
         .catch((err) => console.log(err));
 };
+
+exports.postUserLogin = (req,res,next) => {
+    const email = req.body.loginEmail;
+    const password = req.body.loginPassword;
+
+    User.findOne({where:{email:email}})
+    .then((user)=>{
+       if(user) {
+        if(user.password==password){
+            res
+            .status(200)
+            .send(
+                `<script>alert('Login Successful!');window.location.href='/'</script>`
+            )
+        }
+        else {
+            res.status(401).send('Wrong email or password')
+           }
+       } else {
+        res.status(404).send("No user found") 
+       } 
+      
+    })
+};
