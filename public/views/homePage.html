@@ -8,10 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/homePage.css">
 </head>
 
 <body>
+
+    <!-- nav bar -->
+
+    <!-- ------------------------------------------------------------------------------------------------------------ -->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navigation">
         <div class="container-fluid">
@@ -63,6 +69,117 @@
             </div>
         </div>
     </nav>
+
+    <!-- add expense form  -->
+    
+    <!-- ------------------------------------------------------------------------------------------------------------ -->
+
+
+    <form
+    id="form1"
+    class="d-flex p-2 descriptionform"
+    onsubmit="return false;">
+
+    <div class="input-group mb-3 d-flex m-4 categorydiv" id="category">
+      <button
+        class="dropdown-toggle categoryBtn"
+        type="button"
+        name="category"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        id="categoryBtn"
+      >
+        Select Category
+      </button>
+      <ul
+        class="dropdown-menu"
+        id="categoryMenu"
+        aria-labelledby="categoryBtn"
+      >
+        <li class="dropdown-item" data-value="Mobile & Computers">
+          Mobile & Computers
+        </li>
+        <li class="dropdown-item" data-value="Fashion & Beauty">
+          Fashion & Beauty
+        </li>
+        <li class="dropdown-item" data-value="Groceries & Pet Supplies">
+          Groceries & Pet Supplies
+        </li>
+        <li class="dropdown-item" data-value="Home, Furniture & Appliances">
+          Home, Furniture & Appliances
+        </li>
+        <li class="dropdown-item" data-value="Music, Video & Gaming">
+          Music, Video & Gaming
+        </li>
+        <li class="dropdown-item" data-value="Books & Education">
+          Books & Education
+        </li>
+        <li class="dropdown-item" data-value="Toys, Children & Baby">
+          Toys, Children & Baby
+        </li>
+        <li class="dropdown-item" data-value="Payments & Bookings">
+          Payments & Bookings
+        </li>
+        <li class="dropdown-item" data-value="Automotive">Automotive</li>
+        <li class="dropdown-item" data-value="Office & Professional">
+          Office & Professional
+        </li>
+        <li class="dropdown-item" data-value="Sports, Outdoor & Travel">
+          Sports, Outdoor & Travel
+        </li>
+        <li class="dropdown-item" data-value="Gifting">Gifting</li>
+        <li class="dropdown-item" data-value="Bills & EMI's">
+          Bills & EMI's
+        </li>
+        <li class="dropdown-item" data-value="Others">Others</li>
+      </ul>
+      <input
+        type="hidden"
+        name="category"
+        value="default_value"
+        id="categoryInput"
+      />
+    </div>
+
+    <!--******************************************************************* -->
+    <!-- Decsiption -->
+    <div class="input-group mb-3 d-flex m-4 descriptiondiv" id="descriptiond">
+      <span class="input-group-text" id="inputGroup-sizing-default"
+        >Description</span
+      >
+      <input
+        type="text"
+        id="descriptionValue"
+        name="description"
+        class="form-control descriptioninput"
+        aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-default"
+      />
+    </div>
+
+    <!--  ****************************************************************** -->
+    <!-- Amount -->
+
+    <div class="input-group mb-3 d-flex m-4" id="amount">
+      <span class="input-group-text">Amount</span>
+      <span class="input-group-text"> &#8377;</span>
+      <input
+        type="text"
+        name="amount"
+        class="form-control amountinput"
+        aria-label="Dollar amount (with dot and two decimal places)"
+        id="amountValue"
+      />
+    </div>
+
+    <!--     ********************************************************************************* -->
+    <!-- Add Expense Btn-->
+    <div class="mb-3 d-flex m-5" id="submit">
+      <button type="submit" class="addexpensebtn" id="submitBtn">
+        Add Expense
+      </button>
+    </div>
+  </form>
 
 </body>
 

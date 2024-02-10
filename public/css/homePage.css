@@ -1,5 +1,9 @@
 
-body, h1, h2, h3, p, ul, li {
+body{
+    background-color: bisque;
+} 
+
+.h1, h2, h3, p, ul, li {
     margin: 0;
     padding: 0;
 }
@@ -42,7 +46,6 @@ body, h1, h2, h3, p, ul, li {
 
 .premiumIcon {
     margin-right: 10px;
-    color: white;
 }
 
 
@@ -54,6 +57,46 @@ body, h1, h2, h3, p, ul, li {
     background-color: brown;
     color: white;
 }
-#premiumimg{
-    color: white !important;
+.categoryBtn{
+    background-color: brown;
+    color: white;
+    border-radius: 10px;
+    border: 2px solid brown;
+    width: 20vw;
+    font-size: large;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}
+.descriptionform{
+    background-color: white;
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px brown;
+
+}
+.input-group-text{
+    background-color: brown;
+    color: white;
+    font-size: large;
+    border: 2px solid brown;
+}
+.addexpensebtn{
+    background-color: brown;
+    color: white;
+    border-radius: 10px;
+    border: 2px solid brown;
+    width: 10vw;
+    padding: 5px !important;
+    transition: 0.5s ease;
+}
+.addexpensebtn:hover{
+    transform: scale(1.05);
+}
+.addexpensebtn:focus{
+    transform: scale(0.95);
+}
+.amountinput,.descriptioninput{
+    width: 25vw !important;
 }
