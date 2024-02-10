@@ -1,5 +1,6 @@
 const path = require("path");
 const User = require("../models/userModels");
+const bcrypt = require("bcrypt");
 
 exports.getLoginPage = (req, res, next) => {
     res.sendFile(path.join(__dirname, "../", "public", "views", "login.html"));
@@ -17,11 +18,14 @@ exports.postUserSignUp = (req, res, next) => {
                     `<script>alert('This email is already taken. Please try another one!');window.location.href='/'</script>`
                 );
             } else {
-                User.create({
+ 
+                bcrypt.hash(password,10, async (err,hash)=>{
+                await User.create({
                     name: name,
                     email: email,
-                    password: password,
+                    password: hash,
                 });
+                })
             }
         })
         .then(() => {
@@ -37,19 +41,20 @@ exports.postUserLogin = (req,res,next) => {
     User.findOne({where:{email:email}})
     .then((user)=>{
        if(user) {
-        if(user.password==password){
-            res
-            .status(200)
-            .send(
-                `<script>alert('Login Successful!');window.location.href='/'</script>`
-            )
-        }
-        else {
-            res.status(401).send('Wrong email or password')
-           }
-       } else {
+ 
+        bcrypt.compare(password,user.password,(err,result)=>{
+            if(err){
+                res.status(401).send('Wrong email or password')
+            }
+            if(result===true){
+                res
+                .status(200)
+                .send(
+                    `<script>alert('Login Successful!');window.location.href='/'</script>`)
+            }
+        })  
+       } else{
         res.status(404).send("No user found") 
-       } 
-      
+    }      
     })
 };
