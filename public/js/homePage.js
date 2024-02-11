@@ -135,8 +135,8 @@ async function getAllExpenses(){
        td4.appendChild(editBtn);
 
 
-       tr.appendChild(td1) ;
-       tr.appendChild(td2) ;
+       tr.appendChild(td1);
+       tr.appendChild(td2);
        tr.appendChild(td3);
        tr.appendChild(td4);
 
@@ -145,3 +145,34 @@ async function getAllExpenses(){
     (err)=>console.log(err);
     }
 }
+
+
+// delete expenses logic
+
+//------------------------------------------------------------------------------------------------------------------------------
+
+async function deleteExpense(e) {
+
+    try{
+    
+        if(e.target.classList.contains("delete")){
+            let tr = e.target.parentElement.parentElement;
+            let id = tr.children[0].textContent;
+            const res = await axios.get(``);
+            window.location.reload();
+        }
+
+
+    }
+    catch {
+
+    (err) => console.log(err);
+
+    }
+}
+
+
+// edit expenses 
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+
