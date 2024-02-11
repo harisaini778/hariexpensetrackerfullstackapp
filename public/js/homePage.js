@@ -176,3 +176,56 @@ async function deleteExpense(e) {
 
 //-------------------------------------------------------------------------------------------------------------------------------------
 
+async function editExpense(e) {
+
+
+    try{
+        const categoryValue = document.getElementById("categoryBtn");
+        const descriptionValue = document.getElementById("descriptionValue");
+        const amountValue = document.getElementById( "amountValue" );
+        const addExpenseBtn = document.getElementById("submitBtn");
+
+        if(e.target.classList.contains('edit')){
+            let tr = e.target.parentElement.parentElement;
+            let id = tr.children[0].textContent;
+            const res = await axios.get("");
+
+            res.data.forEach((expense)=>{
+                 if(expense.id==id) {
+                    console.log("id in res : ",expense.id);
+                    categoryValue.textContent = expense.category;
+                    descriptionValue.value = expense.description;
+                    amountValue.value = expense.amount;
+                    addExpenseBtn.textContent = "Update";
+                    
+                    addExpenseBtn.removeEventListener("click",addExpense);
+
+                    addExpense.addEventListener("click",async function Update(e){
+                        e.preventDefault();
+                        console.log("request to backend for edit");
+                        const res = await axios.post("",{
+                            category:categoryValue.textContent.trim(),
+                            description:descriptionValue.value,
+                            amount:amountValue,
+                        });
+                        window.location.reload();
+                    });
+
+                 }
+            });
+    }
+}catch {
+ (err)=> console.log(err);
+}
+}
+
+addExpenseBtn.addEventListener("click",addExpense);
+document.addEventListener("DOMContentLoaded",getAllExpenses);
+
+table.addEventListener("click",(e)=>{
+    deleteExpense(e);
+});
+
+table.addEventListener("click",(e)=>{
+    editExpense(e);
+});
