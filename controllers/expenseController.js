@@ -36,7 +36,7 @@ exports.getAllExpenses = (req,res,next) => {
      })
 };
 
-exports.deleteExpense = (req,res,next) =>{
+exports.deleteExpenses = (req,res,next) =>{
 
     const id = req.params.id;
     console.log("Delete expense id : ",id);
@@ -56,7 +56,7 @@ exports.deleteExpense = (req,res,next) =>{
 }
 
 
-exports.editExpense = (req,res,next) =>{
+exports.editExpenses = (req,res,next) =>{
     
     const id = req.params.id;
     console.log("Edit Expense api req.body is : ",req.body);
