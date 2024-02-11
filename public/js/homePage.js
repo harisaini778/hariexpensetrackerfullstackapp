@@ -95,6 +95,53 @@ async function getAllExpenses(){
        const descriptionValue = expenses.description;
        const amountValue = expenses.amount;
 
-        })
+
+       let tr = document.createElement("tr");
+       tr.className = "trStyle";
+       table.appendChild(tr);
+
+       let idValue = document.createElement("th");
+       idValue.setAttribute('scope','row');
+       idValue.setAttribute('style','display:none');
+
+       let th = document.createElement("th");
+       th.setAttribute("scope","row");
+
+       tr.appendChild(idValue);
+       tr.appendChild(th);
+
+       idValue.appendChild(document.createTextNode(id));
+       th.appendChild(document.createTextNode(date));
+
+       let td1 = document.createElement( 'td' );
+       td1.appendChild( document.createTextNode( categoryValue ) );
+
+       let td2 = document.createElement("td");
+       td2.appendChild(document.createTextNode(descriptionValue)) ;
+
+       let td3 = document.createElement("td");
+       td3.appendChild(document.createTextNode(amountValue)) ;
+
+       let td4 = document.createElement("td");
+
+       let deleteBtn = document.createElement("button");
+       deleteBtn.className = "editDelete btn btn-danger delete";
+       deleteBtn.appendChild(document.createTextNode("Delete"));
+
+       let  editBtn = document.createElement("button");
+       editBtn.className = "editDelete btn btn-success edit";
+
+       td4.appendChild(deleteBtn);
+       td4.appendChild(editBtn);
+
+
+       tr.appendChild(td1) ;
+       tr.appendChild(td2) ;
+       tr.appendChild(td3);
+       tr.appendChild(td4);
+
+     });
+    }catch {
+    (err)=>console.log(err);
     }
 }
