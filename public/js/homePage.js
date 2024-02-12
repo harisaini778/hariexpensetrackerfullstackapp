@@ -1,4 +1,5 @@
-const { default: axios } = require("axios");
+
+// js/homePage.js
 
 const categoryItems = document.querySelectorAll(".dropdown-item");
 const categoryInput = document.querySelectorAll("#categoryInput");
@@ -57,7 +58,7 @@ async function addExpense() {
 
        const dateStr = ` ${formattedDay}/${formattedMonth}/${year}`
 
-       const res = await axios.post("",{
+       const res = await axios.post("http://localhost:3000/expense/addExpense",{
         date: dateStr,
         category:categoryValue,
         description: descriptionValue,
@@ -65,15 +66,16 @@ async function addExpense() {
        })
        .then((res)=>{
         if(res.status==200){
-            window.location.reload();
+            window.location.replace("/homePage");
         }
        })
        .catch((err)=>{
-        console.log(err);
+        console.error("Server responded with an unexpected status:", res.status);
+
        })
 
-    } catch {
-        console.error("Unable  to add transaction,something went wrong!");
+    } catch (error) {
+        console.error("Unable to add transaction, something went wrong!", error);
     }
 }
 
@@ -84,7 +86,7 @@ async function addExpense() {
 
 async function getAllExpenses(){
     try {
-        const res = await axios.get("");
+        const res = await axios.get("http://localhost:3000/expense/getAllExpenses");
         console.log("fetch expenses has given : ",res.data);
 
         res.data.forEach((expenses)=>{
@@ -129,7 +131,8 @@ async function getAllExpenses(){
        deleteBtn.appendChild(document.createTextNode("Delete"));
 
        let  editBtn = document.createElement("button");
-       editBtn.className = "editDelete btn btn-success edit";
+       editBtn.className = "editDelete btn btn-secondary edit";
+       editBtn.appendChild(document.createTextNode("Edit"));
 
        td4.appendChild(deleteBtn);
        td4.appendChild(editBtn);
@@ -158,7 +161,7 @@ async function deleteExpense(e) {
         if(e.target.classList.contains("delete")){
             let tr = e.target.parentElement.parentElement;
             let id = tr.children[0].textContent;
-            const res = await axios.get(``);
+            const res = await axios.get(`http://localhost:3000/expense/deleteExpense/${id}`);
             window.location.reload();
         }
 
@@ -188,7 +191,7 @@ async function editExpense(e) {
         if(e.target.classList.contains('edit')){
             let tr = e.target.parentElement.parentElement;
             let id = tr.children[0].textContent;
-            const res = await axios.get("");
+            const res = await axios.get("http://localhost:3000/expense/getAllExpenses");
 
             res.data.forEach((expense)=>{
                  if(expense.id==id) {
@@ -203,7 +206,7 @@ async function editExpense(e) {
                     addExpense.addEventListener("click",async function Update(e){
                         e.preventDefault();
                         console.log("request to backend for edit");
-                        const res = await axios.post("",{
+                        const res = await axios.post(`http://localhost:3000/expense/editExpense/${id}`,{
                             category:categoryValue.textContent.trim(),
                             description:descriptionValue.value,
                             amount:amountValue,

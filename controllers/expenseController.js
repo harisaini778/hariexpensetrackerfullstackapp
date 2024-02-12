@@ -1,3 +1,5 @@
+// /controllers/expenseController
+
 const path = require("path");
 const Expense = require("../models/expenseModel");
 const database = require("../utils/database");

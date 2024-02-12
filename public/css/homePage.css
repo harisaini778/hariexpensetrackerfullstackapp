@@ -100,3 +100,39 @@ body{
 .amountinput,.descriptioninput{
     width: 25vw !important;
 }
+
+/* Add this to your existing CSS code */
+
+/* Styling for the dynamic table */
+.tablecontainer{
+    background-color: white !important;
+    border-radius: 10px !important;
+    box-shadow: 5px 5px 5px brown;
+    border-bottom: none !important;
+}
+#tbodyId {
+    margin-top: 20px;
+    overflow: hidden !important; /* Ensure border radius is applied */
+}
+/* 
+.trStyle {
+   border-bottom: none !important;
+} */
+
+th, td {
+    padding: 5px;
+    text-align: center;
+    background-color:white!important;
+    color: brown !important;
+    text-align: center !important;
+    font-size: large;
+}
+
+/* Styling for edit and delete buttons */
+.editDelete {
+    margin: 5px;
+    padding: 5px 10px;
+}
+
+
+
