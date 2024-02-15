@@ -8,7 +8,7 @@ const authenticate = (req,res,next) => {
             token,
             "kjhkjhjchaskjchaijcaknjshdjshheifewyeyewfkwuefgwj"
         );
-        User.findPk(user.userId).then((user)=>{
+        User.findByPk(user.userId).then((user)=>{
             req.user = user;
             next();
         });

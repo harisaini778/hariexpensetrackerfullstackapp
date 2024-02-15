@@ -3,16 +3,25 @@
 const path = require("path");
 const Expense = require("../models/expenseModel");
 const database = require("../utils/database");
+const User = require("../models/userModels");
+const sequelize = require("../utils/database");
 
 exports.getHomePage = (req,res,next) => {
-    res.sendFile(path.join(__dirname,"../","public","views","homePage.html"));
+    try {
+        res.sendFile(path.join(__dirname,"../","public","views","homePage.html"));
+    } catch {
+        (err)=> console.log(err);
+    }
+
 }
 
-exports.addExpense = (req,res,next) => {
+exports.addExpense = async (req,res,next) => { 
     const date = req.body.date;
     const category  = req.body.category;
     const description = req.body.description;
     const amount = req.body.amount;
+
+ 
 
 
     Expense.create({
@@ -20,6 +29,7 @@ exports.addExpense = (req,res,next) => {
         category : category,
         description :  description,
         amount : amount,
+        userId : req.user.id,
     })
     .then((result)=>{
         res.status(200);
@@ -29,7 +39,7 @@ exports.addExpense = (req,res,next) => {
 };
 
 exports.getAllExpenses = (req,res,next) => {
-     Expense.findAll()
+     Expense.findAll({where : {userId:req.user.id}})
      .then((expenses)=>{
         res.json(expenses)
      })
@@ -41,12 +51,11 @@ exports.getAllExpenses = (req,res,next) => {
 exports.deleteExpenses = (req,res,next) =>{
 
     const id = req.params.id;
+    console.log("this is req.body in exoenseControllers : ",req.body);
+
     console.log("Delete expense id : ",id);
 
-    Expense.findByPk(id)
-    .then((expense)=>{
-        return expense.destroy();
-    })
+    Expense.destroy({where : {id:id,userId:req.user.id}})
     .then((result)=>{
         console.log(result);
         res.redirect("/homePage");
@@ -68,13 +77,13 @@ exports.editExpenses = (req,res,next) =>{
 
     console.log("Category from edit API: "+category+" Description: "+description+ " Amount: "+amount);
 
-    Expense.findByPk(id)
-    .then((expense)=>{
-        expense.category = category;
-        expense.description = description;
-        expense.amount= amount;
-        
-        return expense.save()
+    Expense.update({
+        category:category,
+        description: description,
+        amount : amount
+    },
+    {
+        where : {id:id,userId:req.user.id}
     })
     .then((result)=>{
         res.redirect("/homePage");

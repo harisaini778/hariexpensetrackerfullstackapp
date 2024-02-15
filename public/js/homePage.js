@@ -23,6 +23,14 @@ item.addEventListener("click",(e)=>{
 
 
 async function addExpense() {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const token = user.token;
+
+    console.log("token is :",token);
+
+
     try{
         const category = document.getElementById("categoryBtn");;
         const description = document.getElementById("descriptionValue");
@@ -56,17 +64,20 @@ async function addExpense() {
 
         const formattedMonth = month<10 ? `0${month}` : month;
 
-       const dateStr = ` ${formattedDay}/${formattedMonth}/${year}`
+       const dateStr = ` ${formattedDay}/${formattedMonth}/${year}`;
+
 
        const res = await axios.post("http://localhost:3000/expense/addExpense",{
         date: dateStr,
         category:categoryValue,
         description: descriptionValue,
         amount: parseFloat(amountValue)
+       },{
+        headers : {Authorization : token}
        })
        .then((res)=>{
         if(res.status==200){
-            window.location.replace("/homePage");
+            window.location.reload();
         }
        })
        .catch((err)=>{
@@ -85,8 +96,17 @@ async function addExpense() {
 //-----------------------------------------------------------------------------------------------------------------------
 
 async function getAllExpenses(){
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const token = user.token;
+
+    console.log("token is :",token);
+
+
     try {
-        const res = await axios.get("http://localhost:3000/expense/getAllExpenses");
+        //console.log("token is :",token);
+        const res = await axios.get("http://localhost:3000/expense/getAllExpenses",{headers : {Authorization : token}});
         console.log("fetch expenses has given : ",res.data);
 
         res.data.forEach((expenses)=>{
@@ -156,12 +176,20 @@ async function getAllExpenses(){
 
 async function deleteExpense(e) {
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const token = user.token;
+
+    console.log("token is :",token);
+
+
+
     try{
     
         if(e.target.classList.contains("delete")){
             let tr = e.target.parentElement.parentElement;
             let id = tr.children[0].textContent;
-            const res = await axios.get(`http://localhost:3000/expense/deleteExpense/${id}`);
+            const res = await axios.get(`http://localhost:3000/expense/deleteExpense/${id}`,{headers : {Authorization : token}});
             window.location.reload();
         }
 
@@ -181,6 +209,13 @@ async function deleteExpense(e) {
 
 async function editExpense(e) {
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const token = user.token;
+
+    console.log("token is :",token);
+
+
 
     try{
         const categoryValue = document.getElementById("categoryBtn");
@@ -191,7 +226,7 @@ async function editExpense(e) {
         if(e.target.classList.contains('edit')){
             let tr = e.target.parentElement.parentElement;
             let id = tr.children[0].textContent;
-            const res = await axios.get("http://localhost:3000/expense/getAllExpenses");
+            const res = await axios.get("http://localhost:3000/expense/getAllExpenses",{headers : {Authorization : token}});
 
             res.data.forEach((expense)=>{
                  if(expense.id==id) {

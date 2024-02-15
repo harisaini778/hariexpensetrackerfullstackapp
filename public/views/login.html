@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/login.css">
     <title>Login and Signup Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
@@ -21,7 +22,7 @@
             <input type="text" id="login-username" placeholder="Email"  name="loginEmail" required>
             <input type="password" id="login-password" placeholder="Password"  name="loginPassword" required>
             <button type="button" onclick="toggleForm()">Switch to Sign Up</button>
-            <button type="submit">Login</button>
+            <button type="submit" id="loginBtn">Login</button>
         </form>
 
         <form id="signup-form" style="display: none;" action="/user/signup" method="POST">
@@ -44,5 +45,6 @@
 </div>
 
 <script src="../js/login.js"></script>
+
 </body>
 </html>

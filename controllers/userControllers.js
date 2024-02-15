@@ -1,6 +1,20 @@
 const path = require("path");
 const User = require("../models/userModels");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+function generateAccessToken(id,email){
+    return jwt.sign(
+        {
+            userId : id, email:email
+        },
+        "kjhkjhjchaskjchaijcaknjshdjshheifewyeyewfkwuefgwj"
+    );
+};
+
+// function redirectToHomepage(res) {
+//  res.redirect("/homePage");
+// }
 
 exports.getLoginPage = (req, res, next) => {
     res.sendFile(path.join(__dirname, "../", "public", "views", "login.html"));
@@ -10,6 +24,8 @@ exports.postUserSignUp = (req, res, next) => {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
+
+   
 
     User.findOne({ where: { email: email } })
         .then((user) => {
@@ -44,13 +60,16 @@ exports.postUserLogin = (req,res,next) => {
  
         bcrypt.compare(password,user.password,(err,result)=>{
             if(err){
-                res.status(401).send('Wrong email or password')
+                return  res.status(401).json({message:"Invalid Email or Password"});
             }
             if(result===true){
                 res
-                .status(200)
-                .send(
-                    `<script>alert('Login Successful!');window.location.href='/'</script>`)
+                .status(200).json({
+                    success:true,
+                    message:"Login Successful!",
+                    token:generateAccessToken(user.id,user.email),
+                });
+                // redirectToHomepage(res);
             }
         })  
        } else{
@@ -58,3 +77,5 @@ exports.postUserLogin = (req,res,next) => {
     }      
     })
 };
+
+//module.export = {generateAccessToken};

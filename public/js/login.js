@@ -1,6 +1,11 @@
+
+const loginEmail = document.getElementById("login-username");
+const loginPassword = document.getElementById("login-password");
+const loginBtn = document.getElementById("loginBtn");
+
 function toggleForm() {
     var loginForm = document.getElementById("login-form");
-    var signupForm = document.getElementById("signup-form");
+    var signupForm = document.getElementById("signup-form"); 
 
     if (loginForm.style.display === "none") {
         loginForm.style.display = "block";
@@ -11,3 +16,29 @@ function toggleForm() {
     }
 }
 
+function login() {
+    const loginDetails = {
+        loginEmail: loginEmail.value,
+        loginPassword: loginPassword.value
+    };
+
+    axios.post("http://localhost:3000/user/login", loginDetails).then(
+        (result) => {
+            alert(result.data.message);
+            localStorage.setItem('user', JSON.stringify(result.data));
+            //window.location.replace("/homePage"); 
+            window.location.href = "/homePage";
+        }
+    ).catch(
+        (error) => {
+            if (error.response) {
+                const errorMessage = error.response.data.message;
+                alert(errorMessage);
+            } else {
+                alert("Something went wrong. Please try after sometime");
+            }
+        }
+    );
+}
+
+loginBtn.addEventListener("click", login); 
