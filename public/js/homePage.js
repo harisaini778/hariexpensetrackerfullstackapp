@@ -8,6 +8,10 @@ const form = document.getElementById("form1");
 const addExpenseBtn = document.getElementById("submitBtn");
 const table = document.getElementById("tbodyId");
 
+const buyPremiumBtn = document.getElementById("buyPremiumBtn");
+const reportsLink = document.getElementById( "reportsLink" );
+const leaderboardLink = document.getElementById("leaderboardLink");
+
 categoryItems.forEach((item) => {
 
 item.addEventListener("click",(e)=>{
@@ -257,8 +261,57 @@ async function editExpense(e) {
 }
 }
 
+
+async function buyPremium(e) {
+
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(
+        "http://localhost:3000/purchase/premiumMembership",
+        { headers : {Authorization : token}}
+    );
+
+    console.log(res);
+
+    var options = {
+        key : res.data.key_id,
+        order_id : res.data.order.id,
+
+        handler : async  function (response){
+          
+            const res = await axios.post("http://localhost:3000/purchase/updateTransactionStatus",
+            {
+                order_id : options.order_id,
+                payment_id : response.razorpay_payment_id,
+            },{
+                headers : {Authorization : token},
+            });
+        console.log(res);
+        alert("Welcome to our Premium Membership,You have now access to all the features of this platform!");
+        localStorage.setItem("token",res.data.token)
+        },
+    };
+    const rzp1 = new Razorpay(options);
+    rzp1.open();
+    e.preventDefault();
+}
+
+async function isPremium () {
+
+    const token = localStorage.getItem("token");
+    const res = await axios.get("http://localhost:3000/user/isPremiumUser",{
+        headers : { Authorization : token }
+    });
+    if(res.data.isPremium) {
+        buyPremiumBtn.innerHTML = "Premium Member &#128081";
+        reportsLink.removeAttribute("onclick");
+        leaderboardLink.removeAttribute( "onclick" ) ;
+    }
+}
+
+buyPremiumBtn.addEventListener( 'click' , buyPremium );
 addExpenseBtn.addEventListener("click",addExpense);
-document.addEventListener("DOMContentLoaded",getAllExpenses);
+document.addEventListener("DOMContentLoaded",isPremium,getAllExpenses);
 
 table.addEventListener("click",(e)=>{
     deleteExpense(e);

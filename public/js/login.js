@@ -1,3 +1,8 @@
+const signUp = document.getElementById( "signUp" );
+const signIn = document.getElementById( "signIn" );
+const container = document.getElementById( "container" );
+const signUpBtn = document.getElementById("signUpBtn");
+
 
 const loginEmail = document.getElementById("login-username");
 const loginPassword = document.getElementById("login-password");
@@ -26,8 +31,8 @@ function login() {
         (result) => {
             alert(result.data.message);
             localStorage.setItem('user', JSON.stringify(result.data));
-            //window.location.replace("/homePage"); 
-            window.location.href = "/homePage";
+            window.location.replace("/homePage"); 
+            //window.location.href = "/homePage";
         }
     ).catch(
         (error) => {

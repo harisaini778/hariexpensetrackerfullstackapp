@@ -12,6 +12,12 @@ function generateAccessToken(id,email){
     );
 };
 
+exports.isPremiumUser = (req,res,next) => {
+    if(req.user.isPremiumUser) {
+        return res.json({isPremiumUser : true});
+    }
+}
+
 // function redirectToHomepage(res) {
 //  res.redirect("/homePage");
 // }
@@ -30,7 +36,7 @@ exports.postUserSignUp = (req, res, next) => {
     User.findOne({ where: { email: email } })
         .then((user) => {
             if (user) {
-                res.send(
+                res.status(409).send(
                     `<script>alert('This email is already taken. Please try another one!');window.location.href='/'</script>`
                 );
             } else {

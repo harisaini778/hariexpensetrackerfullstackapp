@@ -9,7 +9,8 @@ const User = sequelize.define("users",{
 
     name:Sequelize.STRING,
     email:Sequelize.STRING,
-    password:Sequelize.STRING
+    password:Sequelize.STRING,
+    isPremiumUser : Sequelize.BOOLEAN,
 
 });
 
