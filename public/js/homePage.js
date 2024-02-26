@@ -9,7 +9,7 @@ const addExpenseBtn = document.getElementById("submitBtn");
 const table = document.getElementById("tbodyId");
 
 const buyPremiumBtn = document.getElementById("buyPremiumBtn");
-const reportsLink = document.getElementById( "reportsLink" );
+const reportsLink = document.getElementById( "reportLink" );
 const leaderboardLink = document.getElementById("leaderboardLink");
 
 categoryItems.forEach((item) => {
@@ -263,40 +263,52 @@ async function editExpense(e) {
 
 
 async function buyPremium(e) {
-
     const user = JSON.parse(localStorage.getItem("user"));
-
     const token = user.token;
 
-    console.log("token is :",token);
+    console.log("token is:", token);
 
-    const res = await axios.get(
-      "http://localhost:3000/purchase/premiumMembership",
-      { headers: { Authorization: token } }
-    );
+    const res = await axios.get("http://localhost:3000/purchase/premiumMembership", {
+        headers: { Authorization: token }
+    });
+
     console.log(res);
+
     var options = {
-      key: res.data.key_id, 
-      order_id: res.data.order.id, 
-      handler: async function (response) {
-        const res = await axios.post(
-          "http://localhost:3000/purchase/updateTransactionStatus",
-          {
-            order_id: options.order_id,
-            payment_id: response.razorpay_payment_id,
-          },
-          { headers: { Authorization: token } }
-        );
-  
-        console.log(res);
-        alert(
-          "Welcome to our Premium Membership, You have now Excess to Reports and LeaderBoard"
-        );
-        localStorage.setItem("token", res.data.token);
-      },
+        key: res.data.key_id,
+        order_id: res.data.order.id,
+        handler: async function (response) {
+            if (response.error) {
+                alert("Transaction Failed. Please try again or contact support.");
+                console.error("Razorpay Payment Error:", response.error);
+            } else {
+                const updateRes = await axios.post(
+                    "http://localhost:3000/purchase/updateTransactionStatus",
+                    {
+                        order_id: options.order_id,
+                        payment_id: response.razorpay_payment_id,
+                    },
+                    { headers: { Authorization: token } }
+                );
+
+                console.log(updateRes);
+
+                if (updateRes.data.token) {
+                    alert("Welcome to our Premium Membership! You now have access to Reports and LeaderBoard.");
+                    localStorage.setItem("token", updateRes.data.token);
+                }
+            }
+        },
+        // Add the payment.failed callback
+        modal: {
+            ondismiss: function () {
+                alert("Transaction Failed. Please try again or contact support.");
+            }
+        }
     };
-     // Check if rzp1 is already initialized and close it
-     if (window.rzp1) {
+
+    // Check if rzp1 is already initialized and close it
+    if (window.rzp1) {
         window.rzp1.close();
     }
 
@@ -306,8 +318,7 @@ async function buyPremium(e) {
     // Open the Razorpay modal
     window.rzp1.open();
     e.preventDefault();
-  }
-  
+}
 
 async function isPremium () {
 
@@ -320,10 +331,14 @@ async function isPremium () {
     const res = await axios.get("http://localhost:3000/user/isPremiumUser",{
         headers : { Authorization : token }
     });
-    if(res.data.isPremium) {
+    console.log("res is isPremium function is :",res.data.isPremiumUser);
+
+    if(res.data.isPremiumUser) {
+        console.log("isPremium if condition is working fine");
         buyPremiumBtn.innerHTML = "Premium Member &#128081";
         reportsLink.removeAttribute("onclick");
-        leaderboardLink.removeAttribute( "onclick" ) ;
+        leaderboardLink.removeAttribute( "onclick" );
+        buyPremiumBtn.removeEventListener('click',buyPremium);
     }
 }
 

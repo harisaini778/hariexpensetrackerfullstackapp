@@ -35,8 +35,22 @@ exports.updateTransactionStatus = async (req, res) => {
     const userId = req.user.id;
     const email = req.user.email;
     console.log("User email is : ",email);
+    // console.log("req object in updateTransactionStatus function :",req);
+    // console.log("res object in updateTransactionStatus function :",res);
     const { payment_id, order_id } = req.body;
     const order = await Order.findOne({ where: { orderid: order_id } });
+
+    if (payment_id==undefined) {
+      const failedOrder = await order.update({
+        status: "FAILED",
+      });
+      console.log("Inside the if statement transaction failed");
+      return res.status(400).json({
+        success: false,
+        message: "Transaction Failed",
+      });
+    }
+
     const promise1 = order.update({
       paymentid: payment_id,
       status: "SUCCESSFUL",
@@ -56,6 +70,6 @@ exports.updateTransactionStatus = async (req, res) => {
       });
   } catch (err) {
     console.log(err);
-    res.status(403).json({ error: err, message: "Sometghing went wrong" });
+    res.status(403).json({ error: err, message: "Something went wrong" });
   }
 };
