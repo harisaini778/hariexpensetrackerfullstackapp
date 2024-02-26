@@ -3,7 +3,7 @@ const User = require("../models/userModels");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-function generateAccessToken(id,email){
+function generateAccessToken(id, email, isPremiumUser){
     return jwt.sign(
         {
             userId : id, email:email
@@ -11,6 +11,8 @@ function generateAccessToken(id,email){
         "kjhkjhjchaskjchaijcaknjshdjshheifewyeyewfkwuefgwj"
     );
 };
+
+exports.generateAccessToken = generateAccessToken;
 
 exports.isPremiumUser = (req,res,next) => {
     if(req.user.isPremiumUser) {

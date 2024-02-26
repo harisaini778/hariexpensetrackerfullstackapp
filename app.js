@@ -11,7 +11,7 @@ const purchaseMembershipRouter = require("./router/purchaseMembershipRouter");
 
 const User = require("./models/userModels");
 const Expense =  require("./models/expenseModel");
-const Order = require("./models/expenseModel")
+const Order = require("./models/orderModel");
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));

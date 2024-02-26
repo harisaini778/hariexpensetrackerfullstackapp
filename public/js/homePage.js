@@ -264,41 +264,59 @@ async function editExpense(e) {
 
 async function buyPremium(e) {
 
-    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const token = user.token;
+
+    console.log("token is :",token);
 
     const res = await axios.get(
-        "http://localhost:3000/purchase/premiumMembership",
-        { headers : {Authorization : token}}
+      "http://localhost:3000/purchase/premiumMembership",
+      { headers: { Authorization: token } }
     );
-
     console.log(res);
-
     var options = {
-        key : res.data.key_id,
-        order_id : res.data.order.id,
-
-        handler : async  function (response){
-          
-            const res = await axios.post("http://localhost:3000/purchase/updateTransactionStatus",
-            {
-                order_id : options.order_id,
-                payment_id : response.razorpay_payment_id,
-            },{
-                headers : {Authorization : token},
-            });
+      key: res.data.key_id, 
+      order_id: res.data.order.id, 
+      handler: async function (response) {
+        const res = await axios.post(
+          "http://localhost:3000/purchase/updateTransactionStatus",
+          {
+            order_id: options.order_id,
+            payment_id: response.razorpay_payment_id,
+          },
+          { headers: { Authorization: token } }
+        );
+  
         console.log(res);
-        alert("Welcome to our Premium Membership,You have now access to all the features of this platform!");
-        localStorage.setItem("token",res.data.token)
-        },
+        alert(
+          "Welcome to our Premium Membership, You have now Excess to Reports and LeaderBoard"
+        );
+        localStorage.setItem("token", res.data.token);
+      },
     };
-    const rzp1 = new Razorpay(options);
-    rzp1.open();
+     // Check if rzp1 is already initialized and close it
+     if (window.rzp1) {
+        window.rzp1.close();
+    }
+
+    // Create a new instance of Razorpay
+    window.rzp1 = new Razorpay(options);
+
+    // Open the Razorpay modal
+    window.rzp1.open();
     e.preventDefault();
-}
+  }
+  
 
 async function isPremium () {
 
-    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const token = user.token;
+
+    console.log("token is :",token);
+
     const res = await axios.get("http://localhost:3000/user/isPremiumUser",{
         headers : { Authorization : token }
     });
@@ -311,7 +329,8 @@ async function isPremium () {
 
 buyPremiumBtn.addEventListener( 'click' , buyPremium );
 addExpenseBtn.addEventListener("click",addExpense);
-document.addEventListener("DOMContentLoaded",isPremium,getAllExpenses);
+document.addEventListener("DOMContentLoaded",isPremium);
+document.addEventListener("DOMContentLoaded",getAllExpenses);
 
 table.addEventListener("click",(e)=>{
     deleteExpense(e);

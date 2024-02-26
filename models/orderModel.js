@@ -10,7 +10,7 @@ const Order = sequelize.define("order", {
         primaryKey: true,
     },
 
-    paymentid : Sequelize.INTEGER,
+    paymentid : Sequelize.STRING,
     orderid : Sequelize.STRING,
     status : Sequelize.STRING,
 });
