@@ -36,7 +36,7 @@ exports.updateTransactionStatus = async (req, res) => {
     const email = req.user.email;
     console.log("User email is : ",email);
     // console.log("req object in updateTransactionStatus function :",req);
-    // console.log("res object in updateTransactionStatus function :",res);
+    console.log("res object in updateTransactionStatus function :",res.data.payment_id);
     const { payment_id, order_id } = req.body;
     const order = await Order.findOne({ where: { orderid: order_id } });
 

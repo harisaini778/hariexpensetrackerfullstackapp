@@ -338,7 +338,7 @@ async function isPremium () {
         buyPremiumBtn.innerHTML = "Premium Member &#128081";
         reportsLink.removeAttribute("onclick");
         leaderboardLink.removeAttribute( "onclick" );
-        buyPremiumBtn.removeEventListener('click',buyPremium);
+        //buyPremiumBtn.removeEventListener('click',buyPremium);
     }
 }
 
