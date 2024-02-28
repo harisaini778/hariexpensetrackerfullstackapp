@@ -21,6 +21,12 @@ exports.addExpense = async (req,res,next) => {
     const description = req.body.description;
     const amount = req.body.amount;
 
+    User.update({
+        totalExpenses:req.user.totalExpenses + amount,
+    },{
+        where : {id : req.user.id}
+    });
+
  
 
 
@@ -51,7 +57,16 @@ exports.getAllExpenses = (req,res,next) => {
 exports.deleteExpenses = (req,res,next) =>{
 
     const id = req.params.id;
+
     console.log("this is req.body in exoenseControllers : ",req.body);
+
+    Expense.findByPk(id).then((expense)=>{
+    User.update({
+        totalExpenses : req.user.totalExpenses - expense.amount,
+    },{
+        where : {id : req.user.id}
+    })
+    });
 
     console.log("Delete expense id : ",id);
 
@@ -70,25 +85,34 @@ exports.deleteExpenses = (req,res,next) =>{
 exports.editExpenses = (req,res,next) =>{
     
     const id = req.params.id;
+
     console.log("Edit Expense api req.body is : ",req.body);
+
     const category = req.body.category;
     const description = req.body.description;
     const amount =  req.body.amount;
 
     console.log("Category from edit API: "+category+" Description: "+description+ " Amount: "+amount);
 
+    Expense.findByPk(id).then((expense)=>{
+        User.update({
+            totalExpenses : req.user.totalExpenses - expense.amount + amount,
+        },{
+            where : {id : req.user.id}
+        });
+    });
+
     Expense.update({
+
         category:category,
         description: description,
         amount : amount
     },
     {
-        where : {id:id,userId:req.user.id}
+        where :  {id : id, userId:req.user.id}
     })
     .then((result)=>{
         res.redirect("/homePage");
     })
     .catch((err)=>console.log(err));
 };
-
-

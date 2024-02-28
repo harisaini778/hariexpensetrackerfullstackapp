@@ -1,4 +1,3 @@
-
 // js/homePage.js
 
 const categoryItems = document.querySelectorAll(".dropdown-item");

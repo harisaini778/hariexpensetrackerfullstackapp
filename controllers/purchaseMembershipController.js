@@ -1,4 +1,3 @@
-
 const Razorpay = require("razorpay");
 const Order = require("../models/orderModel");
 const userController = require("../controllers/userControllers");
@@ -6,8 +5,8 @@ const userController = require("../controllers/userControllers");
 exports.purchasePremium = async (req, res) => {
     try {
       var rzp = new Razorpay({
-        key_id: "rzp_test_DQmEqUi9B1m2FU",
-        key_secret: "piy6oQQkXmBNFlNmH5gH8LgR",
+        key_id: "rzp_test_QReBfIBxLjL5ms",
+        key_secret: "kheMcFvohU9oIZfn4aC2yvaX",
       });
       const amount = 5000;
       console.log("Entered in Controller");
@@ -36,7 +35,7 @@ exports.updateTransactionStatus = async (req, res) => {
     const email = req.user.email;
     console.log("User email is : ",email);
     // console.log("req object in updateTransactionStatus function :",req);
-    console.log("res object in updateTransactionStatus function :",res.data.payment_id);
+    //console.log("res object in updateTransactionStatus function :",res.data.payment_id);
     const { payment_id, order_id } = req.body;
     const order = await Order.findOne({ where: { orderid: order_id } });
 

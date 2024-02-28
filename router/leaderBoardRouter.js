@@ -4,6 +4,6 @@ const leaderboardController = require("../controllers/leaderboardController");
 
 
 router.get("/getLeaderboardPage",leaderboardController.getLeaderBoardPage);
-router.get("/getLeaderboard",leaderboardController.getLeaderBoard);
+//router.get("/getLeaderboard",leaderboardController.getLeaderBoard);
 
 module.exports = router;

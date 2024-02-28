@@ -2,6 +2,7 @@ const path = require("path");
 const User = require("../models/userModels");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const sequelize = require("../utils/database");
 
 function generateAccessToken(id, email, isPremiumUser){
     return jwt.sign(
@@ -29,8 +30,11 @@ exports.getLoginPage = (req, res, next) => {
 };
 
 exports.postUserSignUp = (req, res, next) => {
+
     const name = req.body.name;
+
     const email = req.body.email;
+
     const password = req.body.password;
 
    
@@ -85,5 +89,21 @@ exports.postUserLogin = (req,res,next) => {
     }      
     })
 };
+exports.getAllUsers = (req, res, next) => {
+    User.findAll({
+      attributes: [
+        [sequelize.col("name"), "name"],
+        [sequelize.col("totalExpenses"), "totalExpenses"],
+      ],
+      order: [[sequelize.col("totalExpenses"), "DESC"]],
+    }).then((users) => {
+      const result = users.map((user) => ({
+        name: user.getDataValue("name"),
+        totalExpenses: user.getDataValue("totalExpenses"),
+      }));
+      res.send(JSON.stringify(result));
+    });
+  };
+  
 
 //module.export = {generateAccessToken};
