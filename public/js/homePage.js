@@ -229,11 +229,14 @@ async function editExpense(e) {
         if(e.target.classList.contains('edit')){
             let tr = e.target.parentElement.parentElement;
             let id = tr.children[0].textContent;
-            const res = await axios.get("http://localhost:3000/expense/getAllExpenses",{headers : {Authorization : token}});
+            const res = await axios.get(`http://localhost:3000/expense/getAllExpenses`,{headers : {Authorization : token}});
 
             res.data.forEach((expense)=>{
+
                  if(expense.id==id) {
+
                     console.log("id in res : ",expense.id);
+
                     categoryValue.textContent = expense.category;
                     descriptionValue.value = expense.description;
                     amountValue.value = expense.amount;
@@ -241,14 +244,22 @@ async function editExpense(e) {
                     
                     addExpenseBtn.removeEventListener("click",addExpense);
 
-                    addExpense.addEventListener("click",async function Update(e){
+                    addExpenseBtn.addEventListener("click",async function Update(e){
+
                         e.preventDefault();
+
                         console.log("request to backend for edit");
-                        const res = await axios.post(`http://localhost:3000/expense/editExpense/${id}`,{
+
+                        const res = await axios.post(`http://localhost:3000/expense/editExpense/${id}`,
+                        {
                             category:categoryValue.textContent.trim(),
                             description:descriptionValue.value,
-                            amount:amountValue,
-                        });
+                            amount:parseFloat(amountValue.value),
+                        },
+                        {
+                            headers : {Authorization : token}
+                        }
+                        );
                         window.location.reload();
                     });
 

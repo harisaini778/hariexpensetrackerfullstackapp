@@ -16,8 +16,20 @@ function generateAccessToken(id, email, isPremiumUser){
 exports.generateAccessToken = generateAccessToken;
 
 exports.isPremiumUser = (req,res,next) => {
-    if(req.user.isPremiumUser) {
-        return res.json({isPremiumUser : true});
+
+    try {
+    
+        if(req.user.isPremiumUser) {
+
+        return res.json({isPremiumUser : true})
+
+        }
+
+    }
+     catch (err)  {
+ 
+    console.log(err);
+
     }
 }
 
@@ -26,20 +38,30 @@ exports.isPremiumUser = (req,res,next) => {
 // }
 
 exports.getLoginPage = (req, res, next) => {
+
+    try {
+
     res.sendFile(path.join(__dirname, "../", "public", "views", "login.html"));
+
+    } catch (err) {
+
+        console.log(err);
+
+    }
+  
 };
 
-exports.postUserSignUp = (req, res, next) => {
+exports.postUserSignUp = async (req, res, next) => {
 
-    const name = req.body.name;
+    try {
 
-    const email = req.body.email;
+        const name = req.body.name;
 
-    const password = req.body.password;
+        const email = req.body.email;
+    
+        const password = req.body.password;
 
-   
-
-    User.findOne({ where: { email: email } })
+       await  User.findOne({ where: { email: email } })
         .then((user) => {
             if (user) {
                 res.status(409).send(
@@ -59,50 +81,72 @@ exports.postUserSignUp = (req, res, next) => {
         .then(() => {
             res.status(200).send('User signed up successfully');
         })
-        .catch((err) => console.log(err));
+    
+        
+    } catch (err) {
+   
+        console.log(err);
+
+    }
 };
 
-exports.postUserLogin = (req,res,next) => {
-    const email = req.body.loginEmail;
-    const password = req.body.loginPassword;
+exports.postUserLogin = async  (req,res,next) => {
 
-    User.findOne({where:{email:email}})
-    .then((user)=>{
-       if(user) {
- 
-        bcrypt.compare(password,user.password,(err,result)=>{
-            if(err){
-                return  res.status(401).json({message:"Invalid Email or Password"});
-            }
-            if(result===true){
-                res
-                .status(200).json({
-                    success:true,
-                    message:"Login Successful!",
-                    token:generateAccessToken(user.id,user.email),
-                });
-                // redirectToHomepage(res);
-            }
-        })  
-       } else{
-        res.status(404).send("No user found") 
-    }      
-    })
+    try {
+
+        const email = req.body.loginEmail;
+
+        const password = req.body.loginPassword;
+
+        await User.findOne({where:{email:email}})
+        .then((user)=>{
+           if(user) {
+     
+            bcrypt.compare(password,user.password,(err,result)=>{
+                if(err){
+                    return  res.status(401).json({message:"Invalid Email or Password"});
+                }
+                if(result===true){
+                    res
+                    .status(200).json({
+                        success:true,
+                        message:"Login Successful!",
+                        token:generateAccessToken(user.id,user.email),
+                    });
+                    // redirectToHomepage(res);
+                }
+            })  
+           } else{
+            res.status(404).send("No user found") 
+        }      
+        })
+   } catch (err) {
+      console.log(err);
+   }
 };
-exports.getAllUsers = (req, res, next) => {
-    User.findAll({
-      attributes: [
-        [sequelize.col("name"), "name"],
-        [sequelize.col("totalExpenses"), "totalExpenses"],
-      ],
-      order: [[sequelize.col("totalExpenses"), "DESC"]],
-    }).then((users) => {
-      const result = users.map((user) => ({
-        name: user.getDataValue("name"),
-        totalExpenses: user.getDataValue("totalExpenses"),
-      }));
-      res.send(JSON.stringify(result));
-    });
+
+exports.getAllUsers =  async (req, res, next) => {
+
+    try {
+
+    await User.findAll({
+        attributes: [
+          [sequelize.col("name"), "name"],
+          [sequelize.col("totalExpenses"), "totalExpenses"],
+        ],
+        order: [[sequelize.col("totalExpenses"), "DESC"]],
+      }).then((users) => {
+        const result = users.map((user) => ({
+          name: user.getDataValue("name"),
+          totalExpenses: user.getDataValue("totalExpenses"),
+        }));
+        res.send(JSON.stringify(result));
+      });
+
+    } catch (err) {
+        console.log(err);
+    }
+    
   };
   
 

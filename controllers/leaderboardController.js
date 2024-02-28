@@ -7,9 +7,19 @@ const Expense = require("../models/expenseModel");
 const sequelize = require("../utils/database");
 
 exports.getLeaderBoardPage = (req,res,next) => {
-    res.sendFile(
-    path.join(__dirname, "../","public","views","leaderboard.html")
-    );
+
+    try {
+     
+        res.sendFile(
+            path.join(__dirname, "../","public","views","leaderboard.html")
+            );
+
+    } catch  (err) {
+        
+        console.log(err);
+
+    }
+
 };
 
 // exports.getLeaderBoard = (req,res,next) => {

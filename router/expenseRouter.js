@@ -13,13 +13,13 @@ router.get("/",expenseController.getHomePage);
 router.get("/getAllExpenses",userAuthentication,
 expenseController.getAllExpenses);
 
-router.get("/deleteExpenses/:id",userAuthentication,
+router.get("/deleteExpense/:id",userAuthentication,
 expenseController.deleteExpenses);
 
 router.post("/addExpense",userAuthentication,
 expenseController.addExpense);
 
-router.post("editExpense/:id",userAuthentication,
+router.post("/editExpense/:id",userAuthentication,
 expenseController.editExpenses);
 
 module.exports=router;

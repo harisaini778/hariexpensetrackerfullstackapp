@@ -16,6 +16,10 @@ exports.getHomePage = (req,res,next) => {
 }
 
 exports.addExpense = async (req,res,next) => { 
+
+    const t = await sequelize.transaction();
+
+    try {
     const date = req.body.date;
     const category  = req.body.category;
     const description = req.body.description;
@@ -42,77 +46,80 @@ exports.addExpense = async (req,res,next) => {
         res.redirect("/homePage");
     })
     .catch((err)=>console.log(err));
-};
 
-exports.getAllExpenses = (req,res,next) => {
-     Expense.findAll({where : {userId:req.user.id}})
-     .then((expenses)=>{
-        res.json(expenses)
-     })
-     .catch((err)=>{
+    await t.commit();
+
+   } catch {
+    async (err) => {
+        await t.rollback();
         console.log(err);
-     })
+    };
+   }
 };
 
-exports.deleteExpenses = (req,res,next) =>{
+exports.getAllExpenses = async (req,res,next) => {
+
+    try {
+    const expenses = await Expense.findAll({where : {userId:req.user.id}});
+    res.json(expenses);
+    } catch(err) {
+    console.log(err);
+    }
+};
+
+exports.deleteExpenses = async (req,res,next) =>{
 
     const id = req.params.id;
 
-    console.log("this is req.body in exoenseControllers : ",req.body);
-
-    Expense.findByPk(id).then((expense)=>{
-    User.update({
+    try {
+     const  expense = await Expense.findByPk(id);
+     await  User.update({
         totalExpenses : req.user.totalExpenses - expense.amount,
     },{
         where : {id : req.user.id}
-    })
     });
+    await  Expense.destroy( {where : {id : id, userId : req.user.id}} );
+    res.redirect("/homePage");
+    } catch(err) {
+    console.log(err);
+    }
 
-    console.log("Delete expense id : ",id);
-
-    Expense.destroy({where : {id:id,userId:req.user.id}})
-    .then((result)=>{
-        console.log(result);
-        res.redirect("/homePage");
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
+    console.log("this is req.body in expenseControllers : ",req.body);
 
 }
 
 
-exports.editExpenses = (req,res,next) =>{
-    
-    const id = req.params.id;
+exports.editExpenses = async (req,res,next) =>{
 
-    console.log("Edit Expense api req.body is : ",req.body);
+    try {
+     
+        const id = req.params.id;
+        
+        console.log('This is the request body',req.body);
+        
+        const category = req.body.category;
+        const description = req.body.description;
+        const amount =  req.body.amount;
 
-    const category = req.body.category;
-    const description = req.body.description;
-    const amount =  req.body.amount;
+        console.log("Category from edit API: "+category+" Description: "+description+ " Amount: "+amount);
+        
+        const expense  = await Expense.findByPk(id);
 
-    console.log("Category from edit API: "+category+" Description: "+description+ " Amount: "+amount);
-
-    Expense.findByPk(id).then((expense)=>{
-        User.update({
-            totalExpenses : req.user.totalExpenses - expense.amount + amount,
+        await User.update({
+            totalExpenses : req.user.totalExpenses - expense.amount + Number(amount),
         },{
             where : {id : req.user.id}
         });
-    });
-
-    Expense.update({
-
-        category:category,
-        description: description,
-        amount : amount
-    },
-    {
-        where :  {id : id, userId:req.user.id}
-    })
-    .then((result)=>{
+    
+        await Expense.update({
+            category : category,
+            description : description,
+            amount : amount,
+        },{
+            where : {id : id,  userId : req.user.id}
+        });
         res.redirect("/homePage");
-    })
-    .catch((err)=>console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
 };
