@@ -151,70 +151,70 @@ exports.getAllUsers =  async (req, res, next) => {
   };
 
 
-  exports.resetPasswordPage = (req,res,next) => {
+//   exports.resetPasswordPage = (req,res,next) => {
 
-    try {
+//     try {
 
-      res.
-      status(200)
-      .sendFile(
-        path.join(__dirname,"../","public","views","resetPassword.html")
-        );
+//       res.
+//       status(200)
+//       .sendFile(
+//         path.join(__dirname,"../","public","views","resetPassword.html")
+//         );
 
-    } catch(err) {
+//     } catch(err) {
 
-    console.log(err);
+//     console.log(err);
 
-    }
-  }
+//     }
+//   }
 
 
-  exports.sendMail = async(req,res,next) =>{
+//   exports.sendMail = async(req,res,next) =>{
 
-  try {
+//   try {
  
-    const client = Sib.ApiClient.instance;
-    const apiKey = client.authentications["api-key"];
-    apiKey.apiKey = "Dm7Svpb0dB5GIA9n";
-    const transEmailApi = new Sib.TransactionalEmailsApi();
+//     const client = Sib.ApiClient.instance;
+//     const apiKey = client.authentications["api-key"];
+//     apiKey.apiKey = "xsmtpsib-a13188f46b350f7ecbbafff2163125b689b3c85cbc0f8ed1ea8bc0e66c0a0669-EMtO20JjLRfrNKTv";
+//     const transEmailApi = new Sib.TransactionalEmailsApi();
 
-    const sender = {
+//     const sender = {
 
-        email : "harisaini607@gmail.com",
-        name : "Hari",
-    };
+//         email : "harisaini607@gmail.com",
+//         name : "Hari",
+//     };
 
-    const receivers = [
+//     const receivers = [
 
-        {
-            email : req.body.email,
-        }
-    ];
+//         {
+//             email : req.body.email,
+//         }
+//     ];
 
-    const emailResponse = await transEmailApi.sendTransacEmail({
+//     const emailResponse = await transEmailApi.sendTransacEmail({
 
-        sender,
-        To : receivers,
-        subject : "Expense Tracker Reset Password",
-        textContent : "Link Below",
+//         sender,
+//         To : receivers,
+//         subject : "Expense Tracker Reset Password",
+//         textContent : "Link Below",
 
-    });
+//     });cfn                                                                                          v v
 
-    res.send(
-        `<script>
-        alert("Check your  Email for the reset password link");
-        </script>`
-    );
-    res.redirect("/");
+//     res.send(
+//         `<script>
+//         alert("Check your  Email for the reset password link");
+//         </script>`
+//     );
+//     res.redirect("/");
 
 
-  } catch(error) {
+//   } catch(error) {
 
-   console.log(error);
+//    console.log(error);
 
-  }
+//   }
 
-  }
+//   }
   
 
 //module.export = {generateAccessToken};
