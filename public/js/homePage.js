@@ -350,6 +350,7 @@ async function isPremium () {
         leaderboardLink.removeAttribute( "onclick" );
         //buyPremiumBtn.removeEventListener('click',buyPremium);
         leaderboardLink.setAttribute("href","/premium/getLeaderboardPage");
+        reportsLink.setAttribute("href","/reports/getReportsPage");
         buyPremiumBtn.removeEventListener("click",buyPremium);
     }
 }

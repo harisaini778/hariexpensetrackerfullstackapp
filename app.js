@@ -8,6 +8,7 @@ const userRouter = require("./router/userRouter");
 const expenseRouter = require("./router/expenseRouter");
 const purchaseMembershipRouter = require("./router/purchaseMembershipRouter");
 const leaderboardRouter = require("./router/leaderBoardRouter");
+const reportsRouter = require("./router/reportsRouter");
 
 
 const resetPasswordRouter = require("./router/resetPasswordRouter");
@@ -31,6 +32,8 @@ app.use("/expense",expenseRouter);
 app.use("/purchase",purchaseMembershipRouter);
 
 app.use("/premium",leaderboardRouter);
+
+app.use("/reports",reportsRouter);
 
 app.use("/password",resetPasswordRouter);
 
