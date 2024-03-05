@@ -5,8 +5,8 @@ const userController = require("../controllers/userControllers");
 exports.purchasePremium = async (req, res) => {
     try {
       var rzp = new Razorpay({
-        key_id: "rzp_test_QReBfIBxLjL5ms",
-        key_secret: "kheMcFvohU9oIZfn4aC2yvaX",
+        key_id: "rzp_test_zCdQcsX0mmDMVD",
+        key_secret: "WPg1l2XhMaGgAQsKCx1uxqqm",
       });
       const amount = 5000;
       console.log("Entered in Controller");

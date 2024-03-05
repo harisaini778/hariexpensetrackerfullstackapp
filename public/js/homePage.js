@@ -35,12 +35,18 @@ async function addExpense() {
 
 
     try{
+        const date = document.getElementById("dateInput").value;
         const category = document.getElementById("categoryBtn");;
         const description = document.getElementById("descriptionValue");
         const  amount = document.getElementById("amountValue");
         const categoryValue = category.textContent.trim();
         const descriptionValue = description.value.trim();
         const amountValue = amount.value.trim();
+
+        if(!date) {
+            alert("Add the date!");
+            window.location.href("/homePage");
+        }
 
         if(categoryValue=="Select Category"){
             alert("Add the Description!");
@@ -55,23 +61,23 @@ async function addExpense() {
             window.location.href("/homePage");
         }
 
-        const currentDate = new Date();
+    //     const currentDate = new Date();
 
-        const day = currentDate.getDate();
+    //     const day = currentDate.getDate();
 
-        const month = currentDate.getMonth() + 1;
+    //     const month = currentDate.getMonth() + 1;
 
-        const year = currentDate.getFullYear();
+    //     const year = currentDate.getFullYear();
 
-        const formattedDay = day < 10 ? `0${day}` : day;
+    //     const formattedDay = day < 10 ? `0${day}` : day;
 
-        const formattedMonth = month<10 ? `0${month}` : month;
+    //     const formattedMonth = month<10 ? `0${month}` : month;
 
-       const dateStr = ` ${formattedDay}/${formattedMonth}/${year}`;
+    //    const dateStr = ` ${year}-${formattedMonth}-${formattedDay}`;
 
 
        const res = await axios.post("http://localhost:3000/expense/addExpense",{
-        date: dateStr,
+        date: date,
         category:categoryValue,
         description: descriptionValue,
         amount: parseFloat(amountValue)

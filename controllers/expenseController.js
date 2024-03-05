@@ -29,7 +29,9 @@ exports.addExpense = async (req,res,next) => {
         totalExpenses:req.user.totalExpenses + amount,
     },{
         where : {id : req.user.id}
-    });
+    }, 
+    // {transaction : t }
+    );
 
  
 
@@ -40,7 +42,9 @@ exports.addExpense = async (req,res,next) => {
         description :  description,
         amount : amount,
         userId : req.user.id,
-    })
+    }, 
+    // {transaction : t }
+    )
     .then((result)=>{
         res.status(200);
         res.redirect("/homePage");
