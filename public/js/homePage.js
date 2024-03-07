@@ -373,3 +373,163 @@ table.addEventListener("click",(e)=>{
 table.addEventListener("click",(e)=>{
     editExpense(e);
 });
+
+// async function getCreditExpenseData () {
+
+//     const user = JSON.parse(localStorage.getItem('user'));
+
+//     const token = user.token;
+
+//    try {
+
+//     const res = await axios.get("http://localhost:3000/credit/creditExpense",
+    
+//     {headers : {Authorization : token}});
+
+//     console.log("Res object in getCreditExpense fn client side : ", res.data);
+
+//     const {totalIncome} = res.data;
+
+//     document.getElementById("incomeValuePlaceholder").innerText = totalIncome;
+
+    
+//    } catch(err) {
+
+//     console.log(err);
+
+//    }
+
+//   };
+
+// ...
+
+async function getCreditExpenseData() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = user.token;
+
+    try {
+        const res = await axios.get("http://localhost:3000/credit/creditExpense", {
+            headers: { Authorization: token },
+        });
+
+        console.log("Res object in getCreditExpense fn client side: ", res.data);
+
+        const totalIncome = res.data.data.reduce((total, expense) => total + expense.totalIncome, 0);
+
+        document.getElementById("incomeValuePlaceholder").innerText = totalIncome;
+
+        // Calculate savings after fetching credit expense data
+        getSavingsData();
+
+        const tbody = document.getElementById("tbodyId2");
+
+
+        res.data.data.forEach((income)=>{
+
+        const tr = document.createElement( "tr" );     
+        
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td" );
+        const td3 = document.createElement( "td" );
+
+        const date = new Date(income.updatedAt);
+
+        console.log("date is : ",date);
+
+        const formattedDate = date.toISOString().substring(0,10);
+
+        console.log("formatted date is : ",formattedDate);
+
+        td1.innerHTML = `<p style="font-weight : bold ">${formattedDate}</p>`;
+
+        td2.innerHTML = `<p>${income.description}</p>`;
+
+        td3.innerHTML = `<p>${income.totalIncome}</p>`;
+
+        tr.appendChild( td1 ) ;
+        tr.append( td2 ) ;
+        tr.append( td3 ) ;
+        tbody.appendChild( tr );
+
+
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+// ...
+
+document.addEventListener("DOMContentLoaded", getCreditExpenseData);
+
+// ...
+
+
+  //document.addEventListener("DOMContentLoaded",getCreditExpenseData);
+
+  async function getSavingsData () {
+  
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const token = user.token;
+
+    try {
+
+        const res2 = await axios.get("http://localhost:3000/credit/creditExpense/savings", 
+        {
+          headers: { Authorization: token },
+        });
+
+        console.log("res2 in the getSavingsData fn client side is : ",res2.data);
+
+        const  savingsAmount = res2.data.data;
+
+        document.getElementById( "savingsValuePlaceholder" ).innerText = savingsAmount;
+
+
+    } catch (err) {
+        console.log(err);
+    }
+
+  }
+
+  //document.addEventListener("DOMContentLoaded",getSavingsData);
+
+
+async function addCreditExpense(e) {
+
+e.preventDefault();
+
+const user = JSON.parse(localStorage.getItem('user'));
+
+const token = user.token;
+
+try {
+    const token = localStorage.getItem("token");
+    const description = document.getElementById("creditDescriptionInput").value.trim();
+    const totalIncome = document.getElementById("totalIncomeInput").value.trim();
+    if (!description || !totalIncome) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    const res = await axios.post(
+      "http://localhost:3000/credit/creditExpense",
+      { description: description, totalIncome: totalIncome },
+      { headers: { Authorization: token } }
+    );
+    console.log(res.data);
+    // Optionally, you can update the UI or show a success message here
+    document.getElementById("creditDescriptionInput").value = "";
+    document.getElementById("totalIncomeInput").value = "";
+    getCreditExpenseData(); // Refresh the credit expense data
+  } catch (err) {
+    console.error("Error adding credit expense:", err);
+  }
+
+
+};
+
+
+document.getElementById("addCreditBtn").addEventListener("click", addCreditExpense);
+

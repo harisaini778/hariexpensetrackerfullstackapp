@@ -57,21 +57,28 @@ body{
     background-color: brown;
     color: white;
 }
+
+.input-group {
+
+    width : 80% !important
+}
+
 .categoryBtn{
     background-color: brown;
     color: white;
     border-radius: 10px;
     border: 2px solid brown;
-    width: 20vw;
+    padding: 10px;
+    /* width: 20vw; */
     font-size: large;
-    text-wrap: nowrap;
-    text-overflow: ellipsis;
+    /* text-wrap: nowrap;
+    text-overflow: ellipsis; */
 }
 .descriptionform{
     background-color: white;
-    margin-top: 50px;
+    /* margin-top: 50px;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 10px; */
     border-radius: 10px;
     box-shadow: 5px 5px 5px brown;
 
@@ -87,8 +94,8 @@ body{
     color: white;
     border-radius: 10px;
     border: 2px solid brown;
-    width: 10vw;
-    padding: 5px !important;
+    /* width: 10vw; */
+    padding: 10px !important;
     transition: 0.5s ease;
 }
 .addexpensebtn:hover{
@@ -97,8 +104,10 @@ body{
 .addexpensebtn:focus{
     transform: scale(0.95);
 }
+
+
 .amountinput,.descriptioninput{
-    width: 25vw !important;
+   padding: 10px;
 }
 
 /* Add this to your existing CSS code */
@@ -132,6 +141,38 @@ th, td {
 .editDelete {
     margin: 5px;
     padding: 5px 10px;
+}
+.creditformcontainer {
+
+    background-color: white !important;
+
+}
+.table-responsive{
+ 
+    font-size: large;
+    font-weight: bold;
+    color: brown;
+    
+}
+.creditExpense{
+
+    background-color: white !important;
+    border-radius: 10px !important;
+    box-shadow: 5px 5px 5px brown;
+    border-bottom: none !important;
+
+
+}
+#addCreditBtn{
+    background-color: brown;
+    color: white;
+    border-radius: 10px;
+    border: 2px solid brown;
+    padding: 10px !important;
+    transition: 0.5s ease;
+}
+#addCreditBtn:hover{
+    transform: scale(1.05);
 }
 
 

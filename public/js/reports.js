@@ -261,8 +261,10 @@ async function getDailyReport(e) {
       console.log(error);
     }
   }
+
   
-  
+
+
   dateShowBtn.addEventListener("click", getDailyReport);
   monthShowBtn.addEventListener("click", getMonthlyReport);
   yearShowBtn.addEventListener("click", getYearlyReport);

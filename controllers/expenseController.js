@@ -25,7 +25,7 @@ exports.addExpense = async (req,res,next) => {
     const description = req.body.description;
     const amount = req.body.amount;
 
-    User.update({
+    await User.update({
         totalExpenses:req.user.totalExpenses + amount,
     },{
         where : {id : req.user.id}

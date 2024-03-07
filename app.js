@@ -12,11 +12,14 @@ const reportsRouter = require("./router/reportsRouter");
 
 
 const resetPasswordRouter = require("./router/resetPasswordRouter");
+const creditExpenseRouter = require("./router/creditExpenseRouter");
 
 const User = require("./models/userModels");
 const Expense =  require("./models/expenseModel");
 const Order = require("./models/orderModel");
 const ResetPassword = require("./models/resetPasswordModel");
+const creditExpenseModel = require("./models/creditExpenseModel");
+
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +40,8 @@ app.use("/reports",reportsRouter);
 
 app.use("/password",resetPasswordRouter);
 
+app.use("/credit",creditExpenseRouter);
+
 ResetPassword.belongsTo(User);
 User.hasMany(ResetPassword);
 
@@ -47,6 +52,11 @@ Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(creditExpenseModel);
+creditExpenseModel.belongsTo(User);
+
+
 
 sequelize
     .sync()
