@@ -358,6 +358,10 @@ async function isPremium () {
         leaderboardLink.setAttribute("href","/premium/getLeaderboardPage");
         reportsLink.setAttribute("href","/reports/getReportsPage");
         buyPremiumBtn.removeEventListener("click",buyPremium);
+        // Reload the current page
+        //window.location.reload();
+        window.location.href( "/homepage" ) ; 
+
     }
 }
 
@@ -506,7 +510,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 const token = user.token;
 
 try {
-    const token = localStorage.getItem("token");
+    //const token = localStorage.getItem("token");
     const description = document.getElementById("creditDescriptionInput").value.trim();
     const totalIncome = document.getElementById("totalIncomeInput").value.trim();
     if (!description || !totalIncome) {

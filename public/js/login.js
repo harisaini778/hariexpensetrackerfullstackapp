@@ -21,13 +21,13 @@ function toggleForm() {
     }
 }
 
-function login() {
+async function login() {
     const loginDetails = {
         loginEmail: loginEmail.value,
         loginPassword: loginPassword.value
     };
 
-    axios.post("http://localhost:3000/user/login", loginDetails).then(
+   await axios.post("http://localhost:3000/user/login", loginDetails).then(
         (result) => {
             alert(result.data.message);
             localStorage.setItem('user', JSON.stringify(result.data));

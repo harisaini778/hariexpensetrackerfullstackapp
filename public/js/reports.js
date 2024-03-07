@@ -1,5 +1,7 @@
 // js/reports.js
 
+//const { default: axios } = require("axios");
+
 const dateInput = document.getElementById("date");
 const dateShowBtn = document.getElementById("dateShowBtn");
 const tbodyDaily = document.getElementById("tbodyDailyId");
@@ -262,6 +264,46 @@ async function getDailyReport(e) {
     }
   }
 
+  async function IncomeAndSavings () {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const token = user.token;
+
+   
+   const res = await axios.get(
+    "http://localhost:3000/credit/creditExpense",
+    { headers: { Authorization: token } }
+  );
+
+   console.log("res in the IncomeAndSavings fn client side : ",res.data);
+
+   let totalIncome = 0;
+
+   res.data.data.forEach((income)=>{
+      totalIncome += income.totalIncome;
+   });
+
+   console.log("Total Income in IncomeAndSavings fn client side is : ",totalIncome);
+
+   document.getElementById("income").innerText = `Total Income - Rs. ${totalIncome}`;
+
+   const res2 = await axios.get(
+    "http://localhost:3000/credit/creditExpense/savings",
+    { headers: { Authorization: token } }
+  );
+
+  console.log("res2 in the IncomeAndSavings fn client side : ",res2.data);
+
+  let savings = res2.data.data;
+
+  console.log("Total Savings in IncomeAndSavings fn client side is : ",savings);
+
+  document.getElementById("saving").innerText = `Total Savings - Rs. ${savings}`;
+
+  }
+
+  document.addEventListener('DOMContentLoaded', IncomeAndSavings());
   
 
 

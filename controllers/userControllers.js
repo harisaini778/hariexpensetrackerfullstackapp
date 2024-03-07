@@ -81,6 +81,7 @@ exports.postUserSignUp = async (req, res, next) => {
         })
         .then(() => {
             res.status(200).send('User signed up successfully');
+            window.location.href='/';
         })
     
         
