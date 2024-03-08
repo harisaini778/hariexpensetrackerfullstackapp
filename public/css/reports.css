@@ -111,3 +111,15 @@ tr {
 #year-input{
     color: brown;
 }
+#downloadReportBtn {
+  background-color: brown;
+  border-color: brown;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.3s ease-in-out;
+
+}
+#downloadReportBtn:hover {
+ transform: scale(0.99);
+}

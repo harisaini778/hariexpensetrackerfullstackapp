@@ -6,6 +6,8 @@ const database = require("../utils/database");
 const User = require("../models/userModels");
 const sequelize = require("../utils/database");
 
+
+
 exports.getHomePage = (req,res,next) => {
     try {
         res.sendFile(path.join(__dirname,"../","public","views","homePage.html"));
@@ -127,3 +129,5 @@ exports.editExpenses = async (req,res,next) =>{
       console.log(err);
     }
 };
+
+

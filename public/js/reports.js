@@ -303,11 +303,44 @@ async function getDailyReport(e) {
 
   }
 
-  document.addEventListener('DOMContentLoaded', IncomeAndSavings());
+  document.addEventListener('DOMContentLoaded', IncomeAndSavings);
   
 
 
   dateShowBtn.addEventListener("click", getDailyReport);
   monthShowBtn.addEventListener("click", getMonthlyReport);
-  yearShowBtn.addEventListener("click", getYearlyReport);
+  //yearShowBtn.addEventListener("click", getYearlyReport);
+
+
+
+  const downloadReport = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+  
+      const res = await axios.get("http://localhost:3000/reports/downloadReport", {
+        headers: { Authorization: token },
+        responseType: 'blob',
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+  
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute("download", "ExpenseReport.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      // Optional: Redirect to homePage after download
+      //window.location.href = "/homePage";
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+  document.getElementById("downloadReportBtn").addEventListener("click", downloadReport);
+ 
+
+  
   
