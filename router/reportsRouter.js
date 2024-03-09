@@ -18,6 +18,10 @@ router.post("/yearlyReports", userAuthentication , reportsController.yearlyRepor
 
 router.get("/downloadReport",userAuthentication,reportsController.downloadExpenseReport);
 
+router.post("/downloadHistory",userAuthentication,reportsController.userDownloadHistory);
+
+router.get("/downloadHistory",userAuthentication,reportsController.getDownloadHistory);
+
 
 
 module.exports = router;

@@ -7,6 +7,8 @@ require("dotenv").config();
 const AWS = require("aws-sdk");
 const CreditExpense = require("../models/creditExpenseModel");
 const User = require("../models/userModels");
+const downloadHistory = require("../models/downloadHistoryModel");
+
 
 
 exports.getReportsPage = (req, res, next) => {
@@ -214,3 +216,60 @@ const uploadToS3 =  (data,filename) => {
     }
   };
   
+
+  
+
+exports.userDownloadHistory = async (req,res) =>{
+
+   try {
+
+    let userId = req.user.id;
+
+    console.log("in the userDownnloadHistory function server side user id is : ",userId);
+
+    let date = req.body.date;
+
+    console.log("in the userDownnloadHistory function server side date is : ",date);
+
+   const historyData =  await downloadHistory.create({
+        date : date,
+        userId : userId,
+    });
+
+    console.log("historyData from the table is : ",historyData);
+
+    res.status(200).json({ success: true, data: historyData });
+
+
+   } catch(err) {
+
+   console.log(err);
+   res.status(500).json({ success: false, error: "Error fetching download history" });
+
+   }
+
+}
+
+exports.getDownloadHistory = async (req,res)=>{
+
+try {
+
+ const userId = req.user.id;
+
+ const downloadHistoryData = await downloadHistory.findAll({
+  where : {userId : req.user.id}
+ });
+
+ console.log("history data from the database is : ",downloadHistoryData);
+
+ res.json(downloadHistoryData);
+
+
+} catch (err) {
+
+  console.log(err);
+
+}
+
+}
+

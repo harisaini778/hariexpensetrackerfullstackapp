@@ -9,6 +9,7 @@ const expenseRouter = require("./router/expenseRouter");
 const purchaseMembershipRouter = require("./router/purchaseMembershipRouter");
 const leaderboardRouter = require("./router/leaderBoardRouter");
 const reportsRouter = require("./router/reportsRouter");
+//const historyRouter = require("./router/downloadHistoryRouter");
 
 
 const resetPasswordRouter = require("./router/resetPasswordRouter");
@@ -19,6 +20,7 @@ const Expense =  require("./models/expenseModel");
 const Order = require("./models/orderModel");
 const ResetPassword = require("./models/resetPasswordModel");
 const creditExpenseModel = require("./models/creditExpenseModel");
+const downloadHistoryModel = require("./models/downloadHistoryModel");
 
 
 app.use(express.static("public"));
@@ -42,6 +44,8 @@ app.use("/password",resetPasswordRouter);
 
 app.use("/credit",creditExpenseRouter);
 
+//app.use("/reports/history",historyRouter);
+
 ResetPassword.belongsTo(User);
 User.hasMany(ResetPassword);
 
@@ -55,6 +59,9 @@ Order.belongsTo(User);
 
 User.hasMany(creditExpenseModel);
 creditExpenseModel.belongsTo(User);
+
+User.hasMany(downloadHistoryModel);
+downloadHistoryModel.belongsTo(User);
 
 
 

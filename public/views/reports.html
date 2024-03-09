@@ -76,7 +76,7 @@
 
 <!-- -------------------------------------------------
   Reports Chart -------------------------------------------->
-<
+
   <div
   class="container mt-4 p-3 bd-highlight"
   id="table">
@@ -86,8 +86,8 @@
     <div class="col-sm-9">
      
       <ul>
-        <li id="income" style="list-style-type: none; font-weight: bold;">Income: </li>
-        <li id="saving"  style="list-style-type: none; font-weight: bold;">Savings:</li>
+        <li id="income" style="list-style-type: none; font-weight: bolder;"></li>
+        <li id="saving"  style="list-style-type: none; font-weight: bolder;"></li>
     </ul>
 
     </div>
@@ -96,7 +96,8 @@
 
       <div class="container">
    
-        <button id="downloadReportBtn" type="submit" class="btn btn-primary">Download Report</button>
+        <button id="downloadReportBtn" type="submit" class="btn btn-primary m-1">Download Report</button>
+        <button id="downloadHistoryBtn" type="submit" class="btn btn-primary m-1">Show Download History</button>
 
 
     </div>
@@ -104,6 +105,28 @@
     </div>
   </div>
  
+</div>
+
+<div class="container historyTableContainer mt-4" >
+  
+  <table class="table table-hover" id="historyTable">
+     
+      <thead>
+        <tr>
+          <th><h5>Your Download History</h5></td>
+          <!-- <th><h3>Time</h3></td> -->
+        </tr>
+    
+      </thead>
+    
+  <tbody id="historyTableBody">
+
+
+
+
+  </tbody>
+ 
+  </table>
 </div>
 
 

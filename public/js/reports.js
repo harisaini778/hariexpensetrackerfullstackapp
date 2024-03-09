@@ -286,7 +286,7 @@ async function getDailyReport(e) {
 
    console.log("Total Income in IncomeAndSavings fn client side is : ",totalIncome);
 
-   document.getElementById("income").innerText = `Total Income - Rs. ${totalIncome}`;
+   document.getElementById("income").innerHTML = `<h5>Total Income - Rs. ${totalIncome}</h5>`;
 
    const res2 = await axios.get(
     "http://localhost:3000/credit/creditExpense/savings",
@@ -299,7 +299,7 @@ async function getDailyReport(e) {
 
   console.log("Total Savings in IncomeAndSavings fn client side is : ",savings);
 
-  document.getElementById("saving").innerText = `Total Savings - Rs. ${savings}`;
+  document.getElementById("saving").innerHTML = `<h5>Total Savings - Rs. ${savings}</h5>`;
 
   }
 
@@ -312,6 +312,31 @@ async function getDailyReport(e) {
   //yearShowBtn.addEventListener("click", getYearlyReport);
 
 
+  const showHistory = async () => {
+    try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user.token;
+
+        const date = new Date();
+
+        const res = await axios.post(
+            "http://localhost:3000/reports/downloadHistory",
+            { date: date }, 
+            {
+                headers: {
+                    Authorization: token,
+                },
+            }
+        );
+
+        console.log("Response from the showHistory function:", res.data);
+
+    } catch (err) {
+        console.error(err);
+    }
+};
+  
+
 
   const downloadReport = async () => {
     try {
@@ -323,6 +348,8 @@ async function getDailyReport(e) {
         responseType: 'blob',
       });
   
+      console.log("Res in the DownloadReport function : ",res);
+
       const url = window.URL.createObjectURL(new Blob([res.data]));
   
       const link = document.createElement('a');
@@ -331,16 +358,80 @@ async function getDailyReport(e) {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-  
+      
+       
+      await showHistory();
+
+
       // Optional: Redirect to homePage after download
       //window.location.href = "/homePage";
+
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
   
   document.getElementById("downloadReportBtn").addEventListener("click", downloadReport);
+
+
+  const displayHistory = async () => {
+
+    try {
+
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      const token = user.token;
+
+      const res = await axios.get("http://localhost:3000/reports/downloadHistory",{
+      headers :{Authorization:token}
+    });
+
+     console.log("response from the get request in the displayHistory function : ",res.data);
+
+     const date = res.data.forEach((element)=>{
+      console.log(element.date);
+      const dateTime = new Date(element.date);
+
+// Get individual time components
+      const hours = dateTime.getHours();
+      const minutes = dateTime.getMinutes();
+      const seconds = dateTime.getSeconds();
+
+      const Time = `${hours}:${minutes}:${seconds}`;
+
+     // const formattedDate = element.date.toISOString().split("T")[0];
+
+      console.log("Time  is : ",Time);
+
+      const tbody = document.getElementById( "historyTableBody" );
+      const tr = document.createElement("tr");
+      const td1 = document.createElement("td");
+     // const td2 = document.createElement( "td" );
+
+      td1.innerText = dateTime;
+
+      //td2.innerText = Time;
+
+      tr.appendChild(td1);
+
+      //tr.appendChild(td2);
+
+      tbody.appendChild(tr) ;
+
+     })
+
+    } catch (err) {
+   
+      console.log(err);
+
+    }
  
+    
+
+  }
+
+
+  document.getElementById("downloadHistoryBtn").addEventListener("click", displayHistory);
 
   
   
