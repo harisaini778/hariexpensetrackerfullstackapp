@@ -63,6 +63,9 @@ exports.addExpense = async (req,res,next) => {
    }
 };
 
+
+
+
 exports.getAllExpenses = async (req,res,next) => {
 
     try {
@@ -72,6 +75,9 @@ exports.getAllExpenses = async (req,res,next) => {
     console.log(err);
     }
 };
+
+
+
 
 exports.deleteExpenses = async (req,res,next) =>{
 

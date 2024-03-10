@@ -162,6 +162,7 @@ const uploadToS3 =  (data,filename) => {
           console.log("Something went wrong." ,err);
       } else {
           console.log("File uploaded successfully.",s3respone,s3respone.Location);
+          console.log("File url is : ",s3respone.Location);
       }
   });
   };
@@ -208,7 +209,11 @@ const uploadToS3 =  (data,filename) => {
   
       const filename = `${userId}_ExpenseReport.csv`;
 
-      uploadToS3(csv, filename);
+     uploadToS3(csv, filename) ;
+
+     console.log("response in the the download Expense button : ", res);
+
+     
 
     } catch (err) {
       console.log(err);
@@ -234,6 +239,7 @@ exports.userDownloadHistory = async (req,res) =>{
    const historyData =  await downloadHistory.create({
         date : date,
         userId : userId,
+        fileUrl: `https://expensetracker12911.s3.amazonaws.com/${userId}_ExpenseReport.csv`, 
     });
 
     console.log("historyData from the table is : ",historyData);

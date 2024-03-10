@@ -16,6 +16,11 @@ const downloadHistoryModel = Sequelize.define("downloadHistory", {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },
+
+    fileUrl : {
+        type : DataTypes.STRING,
+        allowNull : false,
+    }
 });
 
 module.exports = downloadHistoryModel;

@@ -20,6 +20,7 @@ item.addEventListener("click",(e)=>{
 });
 });
 
+
 // Add Expense 
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -104,7 +105,63 @@ async function addExpense() {
 
 //-----------------------------------------------------------------------------------------------------------------------
 
-async function getAllExpenses(){
+
+const expensePerPage = 10;
+
+let currentPage = 1;
+
+let totalPages = 1;
+
+
+function updatePagination () {
+
+    const paginationContainer = document.getElementById("pagination");
+
+    paginationContainer.innerHTML = "";
+
+
+
+    for(let i = 1; i <= totalPages; i++) {
+        
+    const li = document.createElement( "li" );
+
+    li.classList.add("page-item");
+
+
+    const a = document.createElement( "a" );
+
+    a.href = "#";
+
+    a.className = "page-link"
+
+    a.textContent = i;
+
+    a.addEventListener("click", function (event) {
+
+    currentPage = i;
+
+    getAllExpenses(currentPage);
+
+    });
+
+    li.appendChild(a);
+
+    paginationContainer.appendChild(li);
+
+    const currentPageItem = paginationContainer.querySelector(`li:nth-child(${currentPage})`);
+
+    if(currentPageItem) {
+        currentPageItem.classList.add("active");
+    }
+}
+}
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    getAllExpenses(currentPage);
+  });
+
+
+async function getAllExpenses(page){
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -114,69 +171,81 @@ async function getAllExpenses(){
 
 
     try {
-        //console.log("token is :",token);
-        const res = await axios.get("http://localhost:3000/expense/getAllExpenses",{headers : {Authorization : token}});
+        
+        const res = await axios.get(`http://localhost:3000/expense/getAllExpenses?page=${page}`,{headers : {Authorization : token}});
+
         console.log("fetch expenses has given : ",res.data);
 
-        res.data.forEach((expenses)=>{
-
-       const id = expenses.id;
-       const date = expenses.date;
-       const categoryValue = expenses.category;
-       const descriptionValue = expenses.description;
-       const amountValue = expenses.amount;
+        console.log("fetch expenses has length: ",res.data.length);
 
 
-       let tr = document.createElement("tr");
-       tr.className = "trStyle";
-       table.appendChild(tr);
+        totalPages = Math.ceil(res.data.length / expensePerPage);
 
-       let idValue = document.createElement("th");
-       idValue.setAttribute('scope','row');
-       idValue.setAttribute('style','display:none');
+        updatePagination();
 
-       let th = document.createElement("th");
-       th.setAttribute("scope","row");
+        const startIndex = (page - 1) * expensePerPage;
+        const endIndex = startIndex + expensePerPage;
 
-       tr.appendChild(idValue);
-       tr.appendChild(th);
+        table.innerHTML = '';
 
-       idValue.appendChild(document.createTextNode(id));
-       th.appendChild(document.createTextNode(date));
+        res.data.slice(startIndex, endIndex).forEach((expenses) => {
+            const id = expenses.id;
+            const date = expenses.date;
+            const categoryValue = expenses.category;
+            const descriptionValue = expenses.description;
+            const amountValue = expenses.amount;
 
-       let td1 = document.createElement( 'td' );
-       td1.appendChild( document.createTextNode( categoryValue ) );
+            let tr = document.createElement("tr");
+            tr.className = "trStyle";
+            table.appendChild(tr);
 
-       let td2 = document.createElement("td");
-       td2.appendChild(document.createTextNode(descriptionValue)) ;
+            let idValue = document.createElement("th");
+            idValue.setAttribute('scope', 'row');
+            idValue.setAttribute('style', 'display:none');
 
-       let td3 = document.createElement("td");
-       td3.appendChild(document.createTextNode(amountValue)) ;
+            let th = document.createElement("th");
+            th.setAttribute("scope", "row");
 
-       let td4 = document.createElement("td");
+            tr.appendChild(idValue);
+            tr.appendChild(th);
 
-       let deleteBtn = document.createElement("button");
-       deleteBtn.className = "editDelete btn btn-danger delete";
-       deleteBtn.appendChild(document.createTextNode("Delete"));
+            idValue.appendChild(document.createTextNode(id));
+            th.appendChild(document.createTextNode(date));
 
-       let  editBtn = document.createElement("button");
-       editBtn.className = "editDelete btn btn-secondary edit";
-       editBtn.appendChild(document.createTextNode("Edit"));
+            let td1 = document.createElement('td');
+            td1.appendChild(document.createTextNode(categoryValue));
 
-       td4.appendChild(deleteBtn);
-       td4.appendChild(editBtn);
+            let td2 = document.createElement("td");
+            td2.appendChild(document.createTextNode(descriptionValue));
 
+            let td3 = document.createElement("td");
+            td3.appendChild(document.createTextNode(amountValue));
 
-       tr.appendChild(td1);
-       tr.appendChild(td2);
-       tr.appendChild(td3);
-       tr.appendChild(td4);
+            let td4 = document.createElement("td");
 
-     });
-    }catch {
-    (err)=>console.log(err);
+            let deleteBtn = document.createElement("button");
+            deleteBtn.className = "editDelete btn btn-danger delete";
+            deleteBtn.appendChild(document.createTextNode("Delete"));
+
+            let editBtn = document.createElement("button");
+            editBtn.className = "editDelete btn btn-secondary edit";
+            editBtn.appendChild(document.createTextNode("Edit"));
+
+            td4.appendChild(deleteBtn);
+            td4.appendChild(editBtn);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+        });
+
+    } catch (error) {
+        console.error("Error fetching expenses:", error);
     }
-}
+
+}      
+
 
 
 // delete expenses logic
@@ -368,7 +437,7 @@ async function isPremium () {
 buyPremiumBtn.addEventListener( 'click' , buyPremium );
 addExpenseBtn.addEventListener("click",addExpense);
 document.addEventListener("DOMContentLoaded",isPremium);
-document.addEventListener("DOMContentLoaded",getAllExpenses);
+//document.addEventListener("DOMContentLoaded",getAllExpenses);
 
 table.addEventListener("click",(e)=>{
     deleteExpense(e);
@@ -536,5 +605,3 @@ try {
 
 
 document.getElementById("addCreditBtn").addEventListener("click", addCreditExpense);
-
-

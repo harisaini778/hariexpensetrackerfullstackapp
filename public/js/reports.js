@@ -389,32 +389,30 @@ async function getDailyReport(e) {
      console.log("response from the get request in the displayHistory function : ",res.data);
 
      const date = res.data.forEach((element)=>{
+
       console.log(element.date);
+
       const dateTime = new Date(element.date);
 
-// Get individual time components
+
       const hours = dateTime.getHours();
       const minutes = dateTime.getMinutes();
       const seconds = dateTime.getSeconds();
 
-      const Time = `${hours}:${minutes}:${seconds}`;
-
-     // const formattedDate = element.date.toISOString().split("T")[0];
-
-      console.log("Time  is : ",Time);
+ 
 
       const tbody = document.getElementById( "historyTableBody" );
       const tr = document.createElement("tr");
       const td1 = document.createElement("td");
-     // const td2 = document.createElement( "td" );
+     const td2 = document.createElement( "td" );
 
-      td1.innerText = dateTime;
+      td1.innerHTML = `<h6>${dateTime}</h6>`;
 
-      //td2.innerText = Time;
+      td2.innerHTML =  `<h6 style="text-overflow: ellipsis;">${element.fileUrl}</h6>`;
 
       tr.appendChild(td1);
 
-      //tr.appendChild(td2);
+      tr.appendChild(td2);
 
       tbody.appendChild(tr) ;
 
