@@ -8,6 +8,7 @@ const sequelize = require("../utils/database");
 
 
 
+
 exports.getHomePage = (req,res,next) => {
     try {
         res.sendFile(path.join(__dirname,"../","public","views","homePage.html"));

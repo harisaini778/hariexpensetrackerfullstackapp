@@ -4,13 +4,14 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sequelize = require("../utils/database");
 const Sib = require("sib-api-v3-sdk");
+require("dotenv").config();
 
 function generateAccessToken(id, email, isPremiumUser){
     return jwt.sign(
         {
             userId : id, email:email
         },
-        "kjhkjhjchaskjchaijcaknjshdjshheifewyeyewfkwuefgwj"
+        process.env.Authentication_Key
     );
 };
 

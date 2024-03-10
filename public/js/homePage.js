@@ -603,5 +603,26 @@ try {
 
 };
 
-
 document.getElementById("addCreditBtn").addEventListener("click", addCreditExpense);
+
+
+const logOut = async () =>{
+
+  try {
+
+    localStorage.clear();
+
+    window.location.href = "/";
+
+    alert("You  have logged out successfully!");
+
+
+  }
+
+  catch (err) {
+    console.log (err);
+  }
+
+};
+
+document.getElementById('logoutBtn').addEventListener('click', logOut);

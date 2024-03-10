@@ -404,11 +404,14 @@ async function getDailyReport(e) {
       const tbody = document.getElementById( "historyTableBody" );
       const tr = document.createElement("tr");
       const td1 = document.createElement("td");
-     const td2 = document.createElement( "td" );
+      const td2 = document.createElement( "td" );
+
 
       td1.innerHTML = `<h6>${dateTime}</h6>`;
 
-      td2.innerHTML =  `<h6 style="text-overflow: ellipsis;">${element.fileUrl}</h6>`;
+      td2.textContent =  element.fileUrl;
+
+      td2.classList.add("wrap-text");
 
       tr.appendChild(td1);
 
@@ -430,6 +433,28 @@ async function getDailyReport(e) {
 
 
   document.getElementById("downloadHistoryBtn").addEventListener("click", displayHistory);
+
+
+  const logOut = async () =>{
+
+    try {
+  
+      localStorage.clear();
+  
+      window.location.href = "/";
+
+      alert("You  have logged out successfully!");
+  
+  
+    }
+  
+    catch (err) {
+      console.log (err);
+    }
+  
+  };
+  
+  document.getElementById('logoutBtn').addEventListener('click', logOut);
 
   
   

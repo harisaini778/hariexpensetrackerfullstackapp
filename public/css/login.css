@@ -80,3 +80,28 @@ input:focus{
     color: brown;
     font-weight: bold;
 }
+#forgotPasswordLink{
+    color: brown;
+    margin-top: 0.5rem !important;
+    transition: 0.3s ease-in-out;
+}
+#forgotPasswordLink:hover{
+    transform: scale(1.1);
+}
+.quoteContainer{
+
+    background-color: brown ;
+    padding: 5px;
+    color: white;
+    border-radius: 10px;
+    border-color: brown;
+}
+#signup-username {
+ color: brown;
+}
+#signup-username{
+    color: brown;
+}
+#signup-email{
+    color: brown;
+}

@@ -18,6 +18,15 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="/css/reports.css" />
+    <!-- Add this style to the head section of your HTML -->
+      
+    <style>
+      .wrap-text {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+      }
+    </style>
+
   </head>
 
   <body>
@@ -44,22 +53,23 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/homePage">Home</a>
+              <a class="nav-link active" style="text-align: center;" id="homeLink" aria-current="page" href="/homePage">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/reports/getReportsPage"
+              <a class="nav-link active" style="text-align: center;" id="reportLink" aria-current="page" href="/reports/getReportsPage"
                 >Reports &#128081
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/premium/getLeaderboardPage"
+              <a class="nav-link active" style="text-align: center;" id="leaderboardLink"  aria-current="page" href="/premium/getLeaderboardPage"
                 >LeaderBoard &#128081
               </a>
             </li>
           </ul>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <div style="text-align: center;">
             <button
-              class="topBtn btn py-1"
+              id="premiumBtn"
+              class="topBtn btn btn-light m-2"
               type="button"
               data-bs-toggle="tooltip"
               data-bs-placement="left"
@@ -67,7 +77,7 @@
             >
               Premium Member &#128081
             </button>
-            <button class="topBtn btn py-1" type="button">Log out</button>
+            <button class="topBtn btn btn-light m-2" type="button" id="logoutBtn">Log out</button>
           </div>
         </div>
       </div>
@@ -113,8 +123,11 @@
      
       <thead>
         <tr>
+       
           <th><h5>Your Download History</h5></td>
-          <th><h5>File Url</h5></td>
+  
+           <th><h5>File Url</h5></td>
+            
         </tr>
     
       </thead>

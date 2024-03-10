@@ -36,41 +36,41 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/homePage">Home
+                    <li class="nav-item" style="text-align: center;">
+                        <a class="nav-link active" aria-current="page" href="/homePage" id="homeLink">Home
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <div class="hstack gap-2">
+                    <li class="nav-item"  style="text-align: center;" >
+                       
                             <a id="reportLink" class="nav-link active" aria-current="page" href="#"
-                            onclick="onClickAlert()">
+                            onclick="onClickAlert()"  style="text-align: center;">
                                 Reports &#128081
                            </a>
-                            <span>
+                            <!-- <span>
                                 <img src="../views/diamond.png" width="40px" height="40px" id="premiumpng" />
-                            </span>
-                          </div>  
+                            </span> -->
+                       
                     </li>
-                    <li class="nav-item">
-                        <div class="hstack gap-2">
+
+                    <li class="nav-item" style="text-align: center;">
                             <a id="leaderboardLink" class="nav-link active" aria-current="page" href="#" onclick="onClickAlert()">
                                 LeaderBoard &#128081
                            </a>
-                            <span>
+                            <!-- <span>
                                 <img src="../views/diamond.png" width="40px" height="40px" id="premiumpng" />
-                            </span>
-                          </div> 
+                            </span> -->
+                          
                     </li>
                 </ul>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="#" class="premiumIcon">
+                <div style="text-align: center;">
+                    <!-- <a href="#" class="premiumIcon">
                         <img src="../views/diamond.png" width="40px" height="40px" id="premiumpng" />
-                    </a>
+                    </a> -->
                     <button id="buyPremiumBtn" class="btn btn-light" type="button" data-bs-toggle="tooltip" data-bs-placement="left"
                         title="Premium Membership includes access to LeaderBoard & Daily, Monthly, Yearly Reports">
                         Buy Premium &#128081
                     </button>
-                    <button class="btn btn-light" type="button">Logout</button>
+                    <button class="btn btn-light" type="button" id="logoutBtn">Logout</button>
                 </div>
             </div>
         </div>

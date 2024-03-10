@@ -1,12 +1,13 @@
 const Razorpay = require("razorpay");
 const Order = require("../models/orderModel");
 const userController = require("../controllers/userControllers");
+require("dotenv").config();
 
 exports.purchasePremium = async (req, res) => {
     try {
       var rzp = new Razorpay({
-        key_id: "rzp_test_ajlRyyFLPomUbK",
-        key_secret: "bKzurEjaotBlYjAEL7byegzj",
+        key_id: process.env.key_id,
+        key_secret: process.env.key_secret,
       });
       const amount = 5000;
       console.log("Entered in Controller");

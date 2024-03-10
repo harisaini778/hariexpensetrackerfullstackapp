@@ -4,10 +4,15 @@ body {
   width: 100%;
   background-color: bisque;
 }
-/* 293241 dark
-  3d5a80 blue
-  98c1d9 light
-*/
+th, td {
+  padding: 5px;
+  text-align: center;
+  background-color:white!important;
+  color: brown !important;
+  text-align: center !important;
+  font-size: large;
+}
+
 .editDelete {
   float: right;
   margin: 3px;
@@ -20,12 +25,7 @@ body {
   background-color: brown;
   padding: 15px;
 }
-#form1 {
-  border-radius: 10px;
-  background-color: white !important;
-  box-shadow: 4px 4px 9px #293241;
-  margin: 20px 193px;
-}
+
 #table {
   border-radius: 10px;
   background-color: white;
@@ -33,22 +33,12 @@ body {
   /* background-image: linear-gradient(to bottom right, #c7e9fd, #3d5a80); */
   box-shadow: 4px 4px 9px brown;
 }
-#submitBtn {
-  width: 140px;
-  background-color: #293241;
-  border-color: #293241;
-  color: white;
-}
+
 .showBtn {
   width: 80px;
   background-color: brown;
   border-color: brown;
   color: white;
-}
-.topBtn {
-  background-color: white;
-  border-color: white;
-  color: #293241;
 }
 #year-input {
   background-color: white;
@@ -59,13 +49,7 @@ body {
   padding: 7px;
   margin: 7px -4px;
 }
-#categoryBtn {
-  background-color: #293241;
-  width: auto;
-  border-radius: 7px;
-  border: none;
-  color: white;
-}
+
 #category {
   width: 300px;
 }
@@ -90,11 +74,7 @@ body {
   border-color: brown;
   color : brown;
 }
-.topBtn:hover {
-  background-color: #3d5a80;
-  color: white;
-  border-color: #3d5a80;
-}
+
 .editDelete {
   background-color: brown;
   border: none;
@@ -120,6 +100,7 @@ tr {
   transition: 0.3s ease-in-out;
 
 }
+
 #downloadReportBtn:hover {
  transform: scale(0.99);
 }
@@ -144,5 +125,71 @@ tr {
 }
 #downloadHistoryBtn:hover {
  transform: scale(0.99);
+}
+
+@media (max-width:992px) {
+
+  #downloadReportBtn {
+    background-color: brown;
+    border-color: brown;
+    color: white;
+    border-radius: 10px;
+    padding: auto;
+    transition: 0.3s ease-in-out;
+    font-size: small !important;
+  
+  }
+
+  #downloadHistoryBtn {
+    background-color: brown;
+    border-color: brown;
+    color: white;
+    border-radius: 10px;
+    padding: auto;
+    transition: 0.3s ease-in-out;
+    font-size: small !important;
+  
+  }
+  
+}
+
+#reportLink {
+  border-bottom: none;
+  transition: 0.3s ease-in-out;
+}
+#reportLink:hover{
+  border-bottom: 3px solid white;
+  transform: scale(1.1);
+}
+
+#leaderboardLink {
+  border-bottom: none;
+  transition: 0.3s ease-in-out;
+}
+#leaderboardLink:hover{
+  border-bottom: 3px solid white;
+  transform: scale(1.1);
+}
+
+#homeLink {
+  border-bottom: none;
+  transition: 0.3s ease-in-out;
+}
+#homeLink:hover{
+  border-bottom: 3px solid white;
+  transform: scale(1.1);
+}
+#premiumBtn,#logoutBtn {
+  background-color: white;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  color:brown;
+  transition: 0.3s ease;
+}
+#premiumBtn:hover{
+  transform: scale(1.1);
+}
+#logoutBtn:hover{
+  transform: scale(1.1);
 }
 

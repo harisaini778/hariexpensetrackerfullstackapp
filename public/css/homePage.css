@@ -175,5 +175,43 @@ th, td {
     transform: scale(1.05);
 }
 
+#reportLink {
+    border-bottom: none;
+    transition: 0.3s ease-in-out;
+}
+#reportLink:hover{
+    border-bottom: 3px solid white;
+    transform: scale(1.1);
+}
 
+#leaderboardLink {
+    border-bottom: none;
+    transition: 0.3s ease-in-out;
+}
+#leaderboardLink:hover{
+    border-bottom: 3px solid white;
+    transform: scale(1.1);
+}
+
+#homeLink {
+    border-bottom: none;
+    transition: 0.3s ease-in-out;
+}
+#homeLink:hover{
+    border-bottom: 3px solid white;
+    transform: scale(1.1);
+}
+#buyPremiumBtn,#logoutBtn {
+    background-color: white;
+    padding: 10px !important;
+    border-radius: 10px !important;
+    color:brown;
+    transition: 0.3s ease;
+  }
+  #buyPremiumBtn:hover{
+    transform: scale(1.1);
+  }
+  #logoutBtn:hover{
+    transform: scale(1.1);
+  }
 

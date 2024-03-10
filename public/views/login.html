@@ -10,7 +10,7 @@
 <body>
 
 <div class="container">
-  <div><h1>Beaware of little expenses. A small leak will sink a great ship.</h1></div>
+  <div class="quoteContainer"><h2 id="quote">Beaware of little expenses. A small leak will sink a great ship.</h2></div>
   <div class="inner-container">
     <div class="form-container">
         <form id="login-form" action="/user/login" method="post">
@@ -22,7 +22,7 @@
             <input type="text" id="login-username" placeholder="Email"  name="loginEmail" required>
             <input type="password" id="login-password" placeholder="Password"  name="loginPassword" required>
             <button type="button" onclick="toggleForm()">Switch to Sign Up</button>
-            <a href="/password/forgotPasswordPage">Forgot your password?</a>
+            <a href="/password/forgotPasswordPage"  id="forgotPasswordLink">Forgot your password?</a>
             <button type="submit" id="loginBtn">Login</button>
         </form>
 
