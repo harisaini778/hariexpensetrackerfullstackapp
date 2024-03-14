@@ -1,8 +1,21 @@
-// app.js
-
 const express = require("express");
 const app = express();
+
 const bodyParser = require("body-parser");
+const path = require("path");
+const fs = require("fs");
+
+const cors = require("cors");
+app.use(cors());
+
+const dotenv = require("dotenv");
+dotenv.config();
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname,"access.log"),{flags : "a"});
+
+const morgan = require("morgan");
+app.use(morgan("combined",{stream:accessLogStream}));
+
 const sequelize = require("./utils/database");
 const userRouter = require("./router/userRouter");
 const expenseRouter = require("./router/expenseRouter");
@@ -21,6 +34,7 @@ const Order = require("./models/orderModel");
 const ResetPassword = require("./models/resetPasswordModel");
 const creditExpenseModel = require("./models/creditExpenseModel");
 const downloadHistoryModel = require("./models/downloadHistoryModel");
+const { request } = require("http");
 
 
 app.use(express.static("public"));
@@ -66,13 +80,8 @@ downloadHistoryModel.belongsTo(User);
 
 
 sequelize
-    .sync()
-    .then((result) => {
-        console.log("Database synchronized successfully");
-        app.listen(3000, () => {
-            console.log("Server is running on port 3000");
-        });
-    })
-    .catch((err) => {
-        console.error("Error synchronizing database:", err);
-    });
+  .sync()
+  .then((result) => {
+    app.listen(process.env.PORT || 3000);
+  })
+  .catch((err) => console.log(err));

@@ -496,6 +496,9 @@ async function getCreditExpenseData() {
 
         const tbody = document.getElementById("tbodyId2");
 
+         // Clear existing content before adding new rows
+         tbody.innerHTML = '';
+
 
         res.data.data.forEach((income)=>{
 
@@ -603,7 +606,12 @@ try {
 
 };
 
-document.getElementById("addCreditBtn").addEventListener("click", addCreditExpense);
+//document.getElementById("addCreditBtn").addEventListener("click", addCreditExpense,getCreditExpenseData);
+
+document.getElementById("addCreditBtn").addEventListener("click",addCreditExpense);
+
+
+
 
 
 const logOut = async () =>{
