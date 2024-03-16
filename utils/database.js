@@ -1,10 +1,12 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const Sequelize = require("sequelize");
 const sequelize = new  Sequelize(
-    "hariexpensetracker", // database name
-    "root",   // user name
-    "mysql123",      // password
+    process.env.DB_NAME, // database name
+    process.env.USER_NAME,   // user name
+    process.env.PASSWORD, // password
     {
-        host: 'localhost',
+        host: process.env.HOST,
         dialect:'mysql'
         }
 )   
